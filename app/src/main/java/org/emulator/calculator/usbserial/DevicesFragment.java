@@ -57,14 +57,14 @@ public class DevicesFragment extends ListFragment {
                 if(item.driver == null)
                     text1.setText(getString(Utils.resId(DevicesFragment.this, "string", "serial_ports_device_no_driver")));
                 else {
-                	String deviceName = item.driver.getClass().getSimpleName().replace("SerialDriver","");
-                	if(item.driver.getPorts().size() == 1)
-		                text1.setText(deviceName);
-	                else
-		                text1.setText(String.format(Locale.US, getString(Utils.resId(DevicesFragment.this, "string", "serial_ports_device_item_title")), deviceName, item.port));
+                    String deviceName = item.driver.getClass().getSimpleName().replace("SerialDriver","");
+                    if(item.driver.getPorts().size() == 1)
+                        text1.setText(deviceName);
+                    else
+                        text1.setText(String.format(Locale.US, getString(Utils.resId(DevicesFragment.this, "string", "serial_ports_device_item_title")), deviceName, item.port));
                 }
                 if(item.device != null)
-	                text2.setText(String.format(Locale.US, getString(Utils.resId(DevicesFragment.this, "string", "serial_ports_device_item_description")), item.device.getVendorId(), item.device.getProductId()));
+                    text2.setText(String.format(Locale.US, getString(Utils.resId(DevicesFragment.this, "string", "serial_ports_device_item_description")), item.device.getVendorId(), item.device.getProductId()));
                 return view;
             }
         };
@@ -92,7 +92,7 @@ public class DevicesFragment extends ListFragment {
         UsbSerialProber usbDefaultProber = UsbSerialProber.getDefaultProber();
         UsbSerialProber usbCustomProber = CustomProber.getCustomProber();
         listItems.clear();
-	    listItems.add(new ListItem(null, 0, null));
+        listItems.add(new ListItem(null, 0, null));
         for(UsbDevice device : usbManager.getDeviceList().values()) {
             UsbSerialDriver driver = usbDefaultProber.probeDevice(device);
             if(driver == null) {
@@ -106,107 +106,107 @@ public class DevicesFragment extends ListFragment {
         listAdapter.notifyDataSetChanged();
     }
 
-	public static class SerialConnectParameters {
-		public int port;
-		public int vendorId;
-		public int productId;
-		public String modelName;
+    public static class SerialConnectParameters {
+        public int port;
+        public int vendorId;
+        public int productId;
+        public String modelName;
 
-		public SerialConnectParameters() {
-			this.port = 0;
-			this.vendorId = 0;
-			this.productId = 0;
-			this.modelName = "";
-		}
-		public SerialConnectParameters(int port, int vendorId, int productId, String modelName) {
-			this.port = port;
-			this.vendorId = vendorId;
-			this.productId = productId;
-			this.modelName = modelName;
-		}
+        public SerialConnectParameters() {
+            this.port = 0;
+            this.vendorId = 0;
+            this.productId = 0;
+            this.modelName = "";
+        }
+        public SerialConnectParameters(int port, int vendorId, int productId, String modelName) {
+            this.port = port;
+            this.vendorId = vendorId;
+            this.productId = productId;
+            this.modelName = modelName;
+        }
 
-		public String toSettingsString() {
-			return String.format(Locale.US, "%d,%d,%d,%s", port, vendorId, productId, modelName);
-		}
+        public String toSettingsString() {
+            return String.format(Locale.US, "%d,%d,%d,%s", port, vendorId, productId, modelName);
+        }
 
-		public String toWin32String() {
-			return String.format(Locale.US, "%04X:%04X,%d", vendorId, productId, port);
-		}
+        public String toWin32String() {
+            return String.format(Locale.US, "%04X:%04X,%d", vendorId, productId, port);
+        }
 
-		public String toDisplayString(Context context) {
-			if(vendorId == 0 && productId == 0 && port == 0)
-				return context.getResources().getString(Utils.resId(context, "string", "serial_ports_device_no_driver"));
-			else
-				return String.format(Locale.US, context.getResources().getString(Utils.resId(context, "string", "serial_ports_device")), modelName, vendorId, productId, port);
-		}
+        public String toDisplayString(Context context) {
+            if(vendorId == 0 && productId == 0 && port == 0)
+                return context.getResources().getString(Utils.resId(context, "string", "serial_ports_device_no_driver"));
+            else
+                return String.format(Locale.US, context.getResources().getString(Utils.resId(context, "string", "serial_ports_device")), modelName, vendorId, productId, port);
+        }
 
-		public static SerialConnectParameters fromSettingsString(String serialPorts) {
-			SerialConnectParameters serialConnectParameters = new SerialConnectParameters();
-			serialConnectParameters.fromSettingsStringExtractor(serialPorts);
-			return serialConnectParameters;
-		}
+        public static SerialConnectParameters fromSettingsString(String serialPorts) {
+            SerialConnectParameters serialConnectParameters = new SerialConnectParameters();
+            serialConnectParameters.fromSettingsStringExtractor(serialPorts);
+            return serialConnectParameters;
+        }
 
-		private void fromSettingsStringExtractor(String serialPorts) {
-			Pattern patternSerialPort = Pattern.compile("(\\d+),(\\d+),(\\d+),([^,]+)");
-			Matcher m = patternSerialPort.matcher(serialPorts);
-			if (m.find()) {
-				String portText = m.group(1);
-				String vendorIdText = m.group(2);
-				String productIdText = m.group(3);
-				modelName = m.group(4);
-				try {
-					port = Integer.parseInt(portText);
-				} catch (NumberFormatException ex) {
-					// Catch bad number format
-				}
-				try {
-					vendorId = Integer.parseInt(vendorIdText);
-				} catch (NumberFormatException ex) {
-					// Catch bad number format
-				}
-				try {
-					productId = Integer.parseInt(productIdText);
-				} catch (NumberFormatException ex) {
-					// Catch bad number format
-				}
-			}
-		}
-	}
+        private void fromSettingsStringExtractor(String serialPorts) {
+            Pattern patternSerialPort = Pattern.compile("(\\d+),(\\d+),(\\d+),([^,]+)");
+            Matcher m = patternSerialPort.matcher(serialPorts);
+            if (m.find()) {
+                String portText = m.group(1);
+                String vendorIdText = m.group(2);
+                String productIdText = m.group(3);
+                modelName = m.group(4);
+                try {
+                    port = Integer.parseInt(portText);
+                } catch (NumberFormatException ex) {
+                    // Catch bad number format
+                }
+                try {
+                    vendorId = Integer.parseInt(vendorIdText);
+                } catch (NumberFormatException ex) {
+                    // Catch bad number format
+                }
+                try {
+                    productId = Integer.parseInt(productIdText);
+                } catch (NumberFormatException ex) {
+                    // Catch bad number format
+                }
+            }
+        }
+    }
 
-	/**
-	 * Interface definition for a callback to be invoked when the printer just has print something.
-	 */
-	public interface OnSerialDeviceClickedListener {
-		/**
-		 * Called when the printer just has print something.
-		 */
-		void onSerialDeviceClicked(SerialConnectParameters serialConnectParameters);
-	}
+    /**
+     * Interface definition for a callback to be invoked when the printer just has print something.
+     */
+    public interface OnSerialDeviceClickedListener {
+        /**
+         * Called when the printer just has print something.
+         */
+        void onSerialDeviceClicked(SerialConnectParameters serialConnectParameters);
+    }
 
-	private OnSerialDeviceClickedListener onSerialDeviceClickedListener;
+    private OnSerialDeviceClickedListener onSerialDeviceClickedListener;
 
-	/**
-	 * Register a callback to be invoked when a serial device has been chosen.
-	 * @param onSerialDeviceClickedListener The callback that will run
-	 */
-	void setOnSerialDeviceClickedListener(OnSerialDeviceClickedListener onSerialDeviceClickedListener) {
-		this.onSerialDeviceClickedListener = onSerialDeviceClickedListener;
-	}
+    /**
+     * Register a callback to be invoked when a serial device has been chosen.
+     * @param onSerialDeviceClickedListener The callback that will run
+     */
+    void setOnSerialDeviceClickedListener(OnSerialDeviceClickedListener onSerialDeviceClickedListener) {
+        this.onSerialDeviceClickedListener = onSerialDeviceClickedListener;
+    }
 
-	@Override
+    @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         ListItem item = listItems.get(position-1);
         if(item.driver == null) {
             Toast.makeText(getActivity(), getString(Utils.resId(this, "string", "serial_ports_device_no_driver")), Toast.LENGTH_SHORT).show();
-	        if(onSerialDeviceClickedListener != null)
-		        onSerialDeviceClickedListener.onSerialDeviceClicked(new SerialConnectParameters(0,
-				        0, 0,
-				        ""));
+            if(onSerialDeviceClickedListener != null)
+                onSerialDeviceClickedListener.onSerialDeviceClicked(new SerialConnectParameters(0,
+                        0, 0,
+                        ""));
         } else if(item.device != null) {
-        	if(onSerialDeviceClickedListener != null)
-		        onSerialDeviceClickedListener.onSerialDeviceClicked(new SerialConnectParameters(item.port,
-				        item.device.getVendorId(), item.device.getProductId(),
-				        item.driver.getClass().getSimpleName().replace("SerialDriver","")));
+            if(onSerialDeviceClickedListener != null)
+                onSerialDeviceClickedListener.onSerialDeviceClicked(new SerialConnectParameters(item.port,
+                        item.device.getVendorId(), item.device.getProductId(),
+                        item.driver.getClass().getSimpleName().replace("SerialDriver","")));
         }
     }
 

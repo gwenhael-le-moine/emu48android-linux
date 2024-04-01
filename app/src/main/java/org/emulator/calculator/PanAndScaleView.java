@@ -106,16 +106,16 @@ public class PanAndScaleView extends View {
 
 	public PanAndScaleView(Context context) {
 		super(context);
-		
+
 		commonInitialize(context);
 	}
-	
+
 	public PanAndScaleView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		
+
 		commonInitialize(context);
 	}
-	
+
 	/**
 	 * Interface definition for a callback to be invoked when a view is tapped.
 	 */
@@ -151,32 +151,32 @@ public class PanAndScaleView extends View {
 
 	@SuppressWarnings("unused")
 	public float getMaxZoom() {
-        return maxZoom;
+	return maxZoom;
     }
 
 	@SuppressWarnings("unused")
     public void setMaxZoom(float maxZoom) {
-    	this.maxZoom = maxZoom;
+	this.maxZoom = maxZoom;
     }
 
 	@SuppressWarnings("unused")
     public boolean getShowCursor() {
-        return showCursor;
+	return showCursor;
     }
 
 	@SuppressWarnings("unused")
     public void setShowCursor(boolean showCursor) {
-        this.showCursor = showCursor;
+	this.showCursor = showCursor;
     }
 
 	@SuppressWarnings("unused")
     public PointF getCursorLocation() {
-        return cursorLocation;
+	return cursorLocation;
     }
 
 	@SuppressWarnings("unused")
     public void setCursorLocation(float x, float y) {
-        cursorLocation.set(x, y);
+	cursorLocation.set(x, y);
     }
 
 	/**
@@ -267,7 +267,7 @@ public class PanAndScaleView extends View {
 		paint.setAntiAlias(true);
 
 		setPadding(0, 0, 0, 0);
-		
+
 		scroller = new OverScroller(context);
 
 		scaleDetector = new ScaleGestureDetector(context, new ScaleGestureDetector.OnScaleGestureListener() {
@@ -280,26 +280,26 @@ public class PanAndScaleView extends View {
 			@Override
 		    public boolean onScale(ScaleGestureDetector detector) {
 				if(debug) Log.d(TAG, "onScale()");
-		    	if(fillBounds || preventPinchZoom)
-		    		return false;
+			if(fillBounds || preventPinchZoom)
+				return false;
 				float scaleFactorPreviousX = viewScaleFactorX;
 				float scaleFactorPreviousY = viewScaleFactorY;
 				float detectorScaleFactor = detector.getScaleFactor();
 				viewScaleFactorX *= detectorScaleFactor;
 				viewScaleFactorY *= detectorScaleFactor;
 			    constrainScale();
-	            scaleWithFocus(detector.getFocusX(), detector.getFocusY(), scaleFactorPreviousX, scaleFactorPreviousY);
+		    scaleWithFocus(detector.getFocusX(), detector.getFocusY(), scaleFactorPreviousX, scaleFactorPreviousY);
 			    constrainPan();
-		        invalidate();
-		        return true;
+			invalidate();
+			return true;
 		    }
 
 		    @Override
-	        public void onScaleEnd(ScaleGestureDetector detector) {
+		public void onScaleEnd(ScaleGestureDetector detector) {
 				if(debug) Log.d(TAG, "onScaleEnd()");
 		    }
 		});
-		
+
 		gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
 			@Override
@@ -342,10 +342,10 @@ public class PanAndScaleView extends View {
 					viewScaleFactorX = viewScaleFactorY = scaleFactorMin;
 				else {
 					constrainScale();
-		            scaleWithFocus(e.getX(), e.getY(), scaleFactorPreviousX, scaleFactorPreviousY);
+			    scaleWithFocus(e.getX(), e.getY(), scaleFactorPreviousX, scaleFactorPreviousY);
 				}
 			    constrainPan();
-		        invalidate();
+			invalidate();
 				return true;
 			}
 
@@ -390,7 +390,7 @@ public class PanAndScaleView extends View {
 				return true;
 			}
 		});
-		
+
 		this.setFocusable(true);
 		this.setFocusableInTouchMode(true);
 
@@ -424,7 +424,7 @@ public class PanAndScaleView extends View {
 			hasScrolled = true;
 		} else
 			hasScrolled = false;
-	}    
+	}
 
 	public void doScroll(float deltaX, float deltaY) {
 		if(debug) Log.d(TAG, "doScroll(" + deltaX + "," + deltaY + ")");
@@ -461,7 +461,7 @@ public class PanAndScaleView extends View {
 		} else
 			return super.onTouchEvent(event);
 	}
-	
+
 	@Override
 	public boolean onGenericMotionEvent(MotionEvent event) {
 		if (enablePanAndScale && !fillBounds && (event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
@@ -477,7 +477,7 @@ public class PanAndScaleView extends View {
 		}
 		return super.onGenericMotionEvent(event);
 	}
-	
+
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if(enableZoomKeyboard && enablePanAndScale && !fillBounds) {
@@ -492,7 +492,7 @@ public class PanAndScaleView extends View {
 		}
 		return super.onKeyUp(keyCode, event);
 	}
-	
+
 	// Scale the view step by step following the mouse/touch position
 	private void scaleByStep(float scaleFactor, float x, float y) {
 		float scaleFactorPreviousX = viewScaleFactorX;
@@ -510,14 +510,14 @@ public class PanAndScaleView extends View {
 		constrainPan();
 		invalidate();
 	}
-	
+
 	private void scaleWithFocus(float focusX, float focusY, float scaleFactorPreviousX, float scaleFactorPreviousY) {
 		viewPanOffsetX = viewPanOffsetX + (focusX - viewPanOffsetX) - (focusX - viewPanOffsetX) * viewScaleFactorX / scaleFactorPreviousX;
 		viewPanOffsetY = viewPanOffsetY + (focusY - viewPanOffsetY) - (focusY - viewPanOffsetY) * viewScaleFactorY / scaleFactorPreviousY;
 	}
 
 	protected void constrainScale() {
-        // Don't let the object get too small or too large.
+	// Don't let the object get too small or too large.
 		viewScaleFactorX = Math.max(scaleFactorMin, Math.min(viewScaleFactorX, scaleFactorMax));
 		viewScaleFactorY = Math.max(scaleFactorMin, Math.min(viewScaleFactorY, scaleFactorMax));
 	}
@@ -526,7 +526,7 @@ public class PanAndScaleView extends View {
 	}
 	protected void constrainPan(boolean center) {
 
-        // Keep the panning limits and the image centered.
+	// Keep the panning limits and the image centered.
 		float viewWidth = viewSizeWidth;
 		float viewHeight = viewSizeHeight;
 		if(viewWidth == 0.0f) {
@@ -544,13 +544,13 @@ public class PanAndScaleView extends View {
 		float viewPanMinX = viewSizeWidth - virtualWidth * viewScaleFactorX;
 		float viewPanMinY = viewSizeHeight - virtualHeight * viewScaleFactorY;
 		if(viewRatio > imageRatio) {
-	        // Keep the panning X limits.
+		// Keep the panning X limits.
 			if(viewPanOffsetX < viewPanMinX)
 				viewPanOffsetX = viewPanMinX;
 			else if(viewPanOffsetX > 0f)
 				viewPanOffsetX = 0f;
-			
-	        // Keep the image centered vertically.
+
+		// Keep the image centered vertically.
 			if(center && viewPanMinY > 0f)
 				viewPanOffsetY = viewPanMinY / 2.0f;
 			else {
@@ -560,13 +560,13 @@ public class PanAndScaleView extends View {
 					viewPanOffsetY = viewPanMinY;
 			}
 		} else {
-	        // Keep the panning Y limits.
+		// Keep the panning Y limits.
 			if(viewPanOffsetY < viewPanMinY)
 				viewPanOffsetY = viewPanMinY;
 			else if(viewPanOffsetY > 0f)
 				viewPanOffsetY = 0f;
 
-	        // Keep the image centered horizontally.
+		// Keep the image centered horizontally.
 			if(center && viewPanMinX > 0f)
 				viewPanOffsetX = viewPanMinX / 2.0f;
 			else {
@@ -634,7 +634,7 @@ public class PanAndScaleView extends View {
 	protected void onSizeChanged(int viewWidth, int viewHeight, int oldViewWidth, int oldViewHeight) {
 		if(debug) Log.d(TAG, "onSizeChanged(viewWidth: " + viewWidth + ", viewHeight: " + viewHeight + ", oldViewWidth: " + oldViewWidth + ", oldViewHeight: " + oldViewHeight + ")");
 		super.onSizeChanged(viewWidth, viewHeight, oldViewWidth, oldViewHeight);
-		
+
 		viewSizeWidth = viewWidth;
 		viewSizeHeight = viewHeight;
 		resetViewport((float)viewWidth, (float)viewHeight);
@@ -646,24 +646,24 @@ public class PanAndScaleView extends View {
 	@Override
     public void onDraw(Canvas canvas) {
 
-        canvas.save();
-        canvas.translate(viewPanOffsetX, viewPanOffsetY);
-       	canvas.scale(viewScaleFactorX, viewScaleFactorY);
-       	onCustomDraw(canvas);
-        canvas.restore();
-       	
-       	if(showCursor) {
+	canvas.save();
+	canvas.translate(viewPanOffsetX, viewPanOffsetY);
+	canvas.scale(viewScaleFactorX, viewScaleFactorY);
+	onCustomDraw(canvas);
+	canvas.restore();
+
+	if(showCursor) {
 			paint.setColor(Color.RED);
 			float cx = cursorLocation.x * viewScaleFactorX + viewPanOffsetX;
 			float cy = cursorLocation.y * viewScaleFactorY + viewPanOffsetY;
-       		float rayon = 2.0f * screenDensity;
-       		float size = 10.0f * screenDensity;
-       		canvas.drawLine(cx, cy - rayon - size, cx, cy - rayon, paint);
-       		canvas.drawLine(cx - rayon - size, cy, cx - rayon, cy, paint);
-       		canvas.drawLine(cx, cy + rayon + size, cx, cy + rayon, paint);
-       		canvas.drawLine(cx + rayon + size, cy, cx + rayon, cy, paint);
-       		canvas.drawCircle(cx, cy, rayon, paint);
-       	}
+		float rayon = 2.0f * screenDensity;
+		float size = 10.0f * screenDensity;
+		canvas.drawLine(cx, cy - rayon - size, cx, cy - rayon, paint);
+		canvas.drawLine(cx - rayon - size, cy, cx - rayon, cy, paint);
+		canvas.drawLine(cx, cy + rayon + size, cx, cy + rayon, paint);
+		canvas.drawLine(cx + rayon + size, cy, cx + rayon, cy, paint);
+		canvas.drawCircle(cx, cy, rayon, paint);
+	}
 
 		boolean viewHasChanged = viewHasChanged();
 		if(viewHasChanged) {
@@ -678,24 +678,24 @@ public class PanAndScaleView extends View {
 		) {
 			// Draw the scale thumbnail
 			paint.setColor(scaleThumbnailColor);
-			
+
 			float scale = 0.2f;
 			if(virtualSizeWidth > virtualSizeHeight)
 				scale *= viewSizeWidth / virtualSizeWidth;
 			else
 				scale *= viewSizeHeight / virtualSizeHeight;
 			float marginX = 10f * screenDensity, marginY = 10f * screenDensity;
-	    	rectScaleImage.set(viewSizeWidth - marginX - scale * virtualSizeWidth,
-    			viewSizeHeight - marginY - scale * virtualSizeHeight,
-    			viewSizeWidth - marginX,
-    			viewSizeHeight - marginY
-	    	);
+		rectScaleImage.set(viewSizeWidth - marginX - scale * virtualSizeWidth,
+			viewSizeHeight - marginY - scale * virtualSizeHeight,
+			viewSizeWidth - marginX,
+			viewSizeHeight - marginY
+		);
 			canvas.drawRect(rectScaleImage, paint);
-    		rectScaleView.set(rectScaleImage.left + scale * (-viewPanOffsetX / viewScaleFactorX),
+		rectScaleView.set(rectScaleImage.left + scale * (-viewPanOffsetX / viewScaleFactorX),
 				rectScaleImage.top + scale * (-viewPanOffsetY / viewScaleFactorY),
 				rectScaleImage.left + scale * (viewSizeWidth - viewPanOffsetX) / viewScaleFactorX,
 				rectScaleImage.top + scale * (viewSizeHeight - viewPanOffsetY) / viewScaleFactorY
-    		);
+		);
 			canvas.drawRect(rectScaleView, paint);
 		}
     }
