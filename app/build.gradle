@@ -36,7 +36,7 @@ android {
         targetSdk 33
         versionCode 26
         versionName "2.7"
-        setProperty("archivesBaseName", "Emu48-v$versionName")
+        setProperty("archivesBaseName", "Emu48gwh-v$versionName")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         applicationIdSuffix 'gwh'
         versionNameSuffix 'gwh'
