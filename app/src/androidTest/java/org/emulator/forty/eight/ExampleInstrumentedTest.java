@@ -1,4 +1,4 @@
-package org.emulator.forty.eight;
+package eu.luoi.forty.eight;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("org.emulator.forty.eight", appContext.getPackageName());
+        assertEquals("eu.luoi.forty.eight", appContext.getPackageName());
     }
 }
