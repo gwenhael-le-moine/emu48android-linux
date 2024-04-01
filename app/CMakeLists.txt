@@ -54,16 +54,11 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-
         src/main/cpp/core/apple.c
-#        src/main/cpp/core/cursor.c
-#        src/main/cpp/core/ddeserv.c
-#        src/main/cpp/core/debugger.c
         src/main/cpp/core/disasm.c
         src/main/cpp/core/dismem.c
         src/main/cpp/core/display.c
         src/main/cpp/core/disrpl.c
-#        src/main/cpp/core/Emu48.c #-> To rewrite
         src/main/cpp/core/engine.c
         src/main/cpp/core/external.c
         src/main/cpp/core/fetch.c
@@ -78,19 +73,24 @@ add_library( # Sets the name of the library.
         src/main/cpp/core/mru.c
         src/main/cpp/core/opcodes.c
         src/main/cpp/core/pch.c
-#		src/main/cpp/core/pngcrc.c # Disabled to use new CRC function from lodepng.
         src/main/cpp/core/redeye.c
-                src/main/cpp/core/romcrc.c
+        src/main/cpp/core/romcrc.c
         src/main/cpp/core/rpl.c
         src/main/cpp/core/serial.c
         src/main/cpp/core/settings.c
-#        src/main/cpp/core/sndenum.c
         src/main/cpp/core/sound.c
         src/main/cpp/core/stack.c
         src/main/cpp/core/symbfile.c
         src/main/cpp/core/timer.c
-#        src/main/cpp/core/udp.c
 
+# Unused source files from original Emu48:
+#        src/main/cpp/core/cursor.c
+#        src/main/cpp/core/ddeserv.c
+#        src/main/cpp/core/debugger.c
+#        src/main/cpp/core/Emu48.c #-> To rewrite
+#	 src/main/cpp/core/pngcrc.c # Disabled to use new CRC function from lodepng.
+#        src/main/cpp/core/sndenum.c
+#        src/main/cpp/core/udp.c
 
         src/main/cpp/win32-layer.c
         src/main/cpp/android-layer.c
