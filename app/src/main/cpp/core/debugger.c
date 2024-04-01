@@ -8,8 +8,8 @@
  */
 #include "pch.h"
 #include "resource.h"
-#include "Emu48.h"
-#include "Opcodes.h"
+#include "emu48.h"
+#include "opcodes.h"
 #include "ops.h"
 #include "color.h"
 #include "disrpl.h"

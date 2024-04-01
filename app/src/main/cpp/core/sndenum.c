@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 #include "snddef.h"
 
 typedef HRESULT (WINAPI *LPFNDLLGETCLASSOBJECT)(REFCLSID,REFIID,LPVOID *);

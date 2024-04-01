@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 
 // hand cursor AND mask
 static CONST BYTE ANDmaskCursor[] =

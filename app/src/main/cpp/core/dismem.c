@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 
 typedef struct								// type of model memory mapping
 {

@@ -8,7 +8,7 @@
  */
 #include "pch.h"
 #include "resource.h"
-#include "Emu48.h"
+#include "emu48.h"
 #include "io.h"
 #include "kml.h"
 #include "debugger.h"
@@ -1751,7 +1751,7 @@ static LRESULT OnToolDisasm(VOID)			// disasm dialogbox call
 
 static LRESULT OnTopics(VOID)
 {
-	ShellExecute(hWnd,_T("open"),_T("Emu48.htm"),NULL,szEmuDirectory,SW_SHOWNORMAL);
+	ShellExecute(hWnd,_T("open"),_T("emu48.htm"),NULL,szEmuDirectory,SW_SHOWNORMAL);
 	return 0;
 }
 

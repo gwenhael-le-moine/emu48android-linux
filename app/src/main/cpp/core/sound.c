@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 
 // #define DEBUG_SOUND						// switch for sound debug purpose
 // #define SINE_APPROX						// sine signal approximation

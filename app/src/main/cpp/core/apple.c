@@ -8,8 +8,8 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
-#include "Opcodes.h"
+#include "emu48.h"
+#include "opcodes.h"
 #include "apple.h"
 #include "io.h"								// I/O register definitions
 #include "i28f160.h"
@@ -18,7 +18,7 @@
 
 #pragma intrinsic(memset,memcpy)
 
-#include "Ops.h"
+#include "ops.h"
 
 //
 // ROM buffer access functions

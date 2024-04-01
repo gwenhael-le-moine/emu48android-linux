@@ -8,7 +8,7 @@
  */
 #include "pch.h"
 #include "resource.h"
-#include "Emu48.h"
+#include "emu48.h"
 
 static TCHAR  szOriginal[MAX_PATH] = _T("");
 

@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 #include "ops.h"
 
 #define SAMPLES_PER_SEC		44100			// sound sampling rate
