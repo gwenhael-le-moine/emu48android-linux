@@ -8,3 +8,4 @@
 .externalNativeBuild
 /app/.cxx
 /keystore.jks
+/app/keystore.properties
