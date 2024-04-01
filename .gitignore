@@ -9,3 +9,4 @@
 /app/.cxx
 /app/release
 /keystore.jks
+/app/keystore.properties
