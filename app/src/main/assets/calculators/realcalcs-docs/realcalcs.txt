@@ -1,0 +1,320 @@
+Real Calcs KML Scripts for Emu48
+Version 3.0
+
+By Eric Rechlin
+eric@hpcalc.org
+http://www.hpcalc.org
+
+This is a set of HP 38G, HP 39G, HP 40G, HP 48SX, HP 48GX, and HP 49G "skins"
+for use with Emu48 1.61 (or Emu48+ 1.59) or later.  These skins were
+designed to make the on-screen calculators look as real as possible.
+
+All of the bitmaps are based on photos by Hewlett-Packard, with the exception
+of the 39G/40G, which was scanned by me.  All KML scripts were entirely
+written by me as well, as well as the KMI keyboard layout include files
+(except for keyb38-dm.kmi, described later). The icon files were created by me
+as well.
+
+All bitmaps support transparency when used with the "borderless" mode of
+Emu48, enabled when both the title bar and menu bar are turned off in the
+settings.
+
+All of the skins have touch-sensitive screens for the softkey menus, and all
+but the 38G/39G/40G have NXT and PREV buttons to the right and left,
+respectively, of the softkey menu.  All skins also have full contrast support.
+
+An older version of the "Medium (Cropped)" 49G script was included with HP's
+HP49 SDK for Emu49 and YorkeM and an older version of the "Medium (Full)" 49G
+script was included with the standalone YorkeM program.
+
+
+-------------------------------------------------------------------------------
+
+
+To install a skin, simply extract the necessary files to the Emu48
+directory.  The following skins are included, grouped by calculator:
+
+HP 38G
+======
+
+ROM file required:
+	* rom.38g
+
+Keyboard layout file:
+	* keyb38.kmi (see keyboard-layout-38.png for mappings to a US keyboard)
+
+Alternate keyboard layout file:
+	* keyb38-dm.kmi (by Detlef Müller, rename to keyb38.kmi to use)
+
+Icon:
+	* 38g.ico
+
+Variants:
+
+Medium Cropped:
+	* 2x display with cropped bezel
+	* For resolutions of at least 600 lines
+	* Bitmap: real38g-mc.png
+	* KML: real38g-mc.kml
+
+Medium Full:
+	* 2x display with full bezel
+	* For resolutions of at least 768 lines
+	* Bitmap: real38g-m.png
+	* KML: real38g-m.kml
+
+Large Cropped:
+	* 3x display with cropped bezel
+	* For resolutions of at least 1024 lines
+	* Bitmap: real38g-lc.png
+	* KML: real38g-lc.kml
+
+Large Full:
+	* 3x display with full bezel
+	* For resolutions of at least 1200 lines
+	* Bitmap: real38g-l.png
+	* KML: real38g-l.kml
+
+
+HP 39G
+======
+
+ROM file required:
+	* rom.39g
+
+Keyboard layout file:
+	* keyb3940.kmi (see keyboard-layout-3940.png for mappings to a US keyboard)
+
+Icon:
+	* 39g.ico
+
+Variants:
+
+Medium Cropped:
+	* 2x display with cropped bezel
+	* For resolutions of at least 600 lines
+	* Bitmap: real39g-mc.png
+	* KML: real39g-mc.kml
+
+Medium Full:
+	* 2x display with full bezel
+	* For resolutions of at least 768 lines
+	* Bitmap: real39g-m.png
+	* KML: real39g-m.kml
+
+Large Cropped:
+	* 3x display with cropped bezel
+	* For resolutions of at least 1024 lines
+	* Bitmap: real39g-lc.png
+	* KML: real39g-lc.kml
+
+Large Full:
+	* 3x display with full bezel
+	* For resolutions of at least 1200 lines
+	* Bitmap: real39g-l.png
+	* KML: real39g-l.kml
+
+
+HP 40G
+======
+
+ROM file required:
+	* rom.39g
+
+Keyboard layout file:
+	* keyb3940.kmi (see keyboard-layout-3940.png for mappings to a US keyboard)
+
+Icon:
+	* 39g.ico
+
+Variants:
+
+Medium Cropped:
+	* 2x display with cropped bezel
+	* For resolutions of at least 600 lines
+	* Bitmap: real39g-mc.png
+	* KML: real40g-mc.kml
+
+Medium Full:
+	* 2x display with full bezel
+	* For resolutions of at least 768 lines
+	* Bitmap: real40g-m.png
+	* KML: real40g-m.kml
+
+Large Cropped:
+	* 3x display with cropped bezel
+	* For resolutions of at least 1024 lines
+	* Bitmap: real40g-lc.png
+	* KML: real40g-lc.kml
+
+Large Full:
+	* 3x display with full bezel
+	* For resolutions of at least 1200 lines
+	* Bitmap: real40g-l.png
+	* KML: real40g-l.kml
+
+
+HP 48GX
+=======
+
+ROM file required:
+	* rom.48g
+
+Keyboard layout file:
+	* keyb48.kmi (see keyboard-layout-48.png for mappings to a US keyboard)
+
+Alternate keyboard layout file:
+	* keyb48-old.kmi (from version 1.1, rename to keyb48.kmi to use)
+
+Icon:
+	* 48gx.ico
+
+Variants:
+
+Medium Cropped:
+	* 2x display with cropped bezel
+	* For resolutions of at least 600 lines
+	* Bitmap: real48gx-mc.png
+	* KML: real48gx-mc.kml
+
+Medium Full:
+	* 2x display with full bezel
+	* For resolutions of at least 768 lines
+	* Bitmap: real48gx-m.png
+	* KML: real48gx-m.kml
+
+Large Cropped:
+	* 3x display with cropped bezel
+	* For resolutions of at least 1024 lines
+	* Bitmap: real48gx-lc.png
+	* KML: real48gx-lc.kml
+
+Large Full:
+	* 3x display with full bezel
+	* For resolutions of at least 1200 lines
+	* Bitmap: real48gx-l.png
+	* KML: real48gx-l.kml
+
+
+HP 48SX
+=======
+
+ROM file required:
+	* rom.48s
+
+Keyboard layout file:
+	* keyb48.kmi (see keyboard-layout-48.png for mappings to a US keyboard)
+
+Alternate keyboard layout file:
+	* keyb48-old.kmi (from version 1.1, rename to keyb48.kmi to use)
+
+Icon:
+	* 48sx.ico
+
+Variants:
+
+Medium Cropped:
+	* 2x display with cropped bezel
+	* For resolutions of at least 600 lines
+	* Bitmap: real48sx-mc.png
+	* KML: real48sx-mc.kml
+
+Medium Full:
+	* 2x display with full bezel
+	* For resolutions of at least 768 lines
+	* Bitmap: real48sx-m.png
+	* KML: real48sx-m.kml
+
+Large Cropped:
+	* 3x display with cropped bezel
+	* For resolutions of at least 1024 lines
+	* Bitmap: real48sx-lc.png
+	* KML: real48sx-lc.kml
+
+Large Full:
+	* 3x display with full bezel
+	* For resolutions of at least 1200 lines
+	* Bitmap: real48sx-l.png
+	* KML: real48sx-l.kml
+
+
+HP 49G
+======
+
+ROM file required:
+	* rom.49g
+
+Keyboard layout file:
+	* keyb49g.kmi (see keyboard-layout-49g.png for mappings to a US keyboard)
+
+Icon:
+	* 49g.ico
+
+Variants:
+
+Medium Cropped:
+	* 2x display with cropped bezel
+	* For resolutions of at least 600 lines
+	* Bitmap: real49g-mc.png
+	* KML: real49g-mc.kml
+
+Medium Full:
+	* 2x display with full bezel
+	* For resolutions of at least 768 lines
+	* Bitmap: real49g-m.png
+	* KML: real49g-m.kml
+
+Large Cropped:
+	* 3x display with cropped bezel
+	* For resolutions of at least 1024 lines
+	* Bitmap: real49g-lc.png
+	* KML: real49g-lc.kml
+
+Large Full:
+	* 3x display with full bezel
+	* For resolutions of at least 1200 lines
+	* Bitmap: real49g-l.png
+	* KML: real49g-l.kml
+
+
+-------------------------------------------------------------------------------
+
+
+The keyboard mapping layout images documenting the functionality of each of the
+KMI keyboard layout definition files were created with the following web site:
+
+http://www.keyboard-layout-editor.com/
+
+The JSON source files are included if you want to create your own images to
+document your layouts if you choose to modify the KMI files.  Also included is
+the file keyboard-layout-scancodes.png to show the Emu48 scancodes associated
+with each supported key on a US keyboard.
+
+
+-------------------------------------------------------------------------------
+
+
+Change History
+==============
+
+3.0: February 27, 2019
+	* Converted all images to optimized PNG files
+	* Added "Large Cropped" skins
+	* Renamed "Large" skins to "Large Full"
+	* Renamed "Medium" skins to "Medium Full"
+	* Renamed "Small" skins to "Medium Cropped"
+	* Minor KML file changes
+
+2.0: September 10, 2017
+	* Recreated all KML files from scratch, with shared keyboard mappings
+	* 48 and 38 series keyboard mappings made closer to 49 series
+	* Added "Medium" and "Large" sizes for all skins
+	* Made buttons actually push "down" when you click them
+	* Added icons
+
+1.1: October 22, 2000
+	* Added 39G (Small) and 40G (Small)
+	* Minor KML file changes
+
+1.0: December 15, 1999
+	* Initial release, for 48GX (Small), 48SX (Small), and 49G (Small and Medium)

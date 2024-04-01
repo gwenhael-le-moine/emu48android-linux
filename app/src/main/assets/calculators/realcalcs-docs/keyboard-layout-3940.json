@@ -1,0 +1,279 @@
+[
+  [
+    {
+      "a": 7
+    },
+    "ON",
+    {
+      "x": 1
+    },
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    {
+      "x": 0.5
+    },
+    "F5",
+    "F6",
+    "SYMB",
+    "PLOT",
+    {
+      "x": 0.5
+    },
+    "NUM",
+    {
+      "g": true
+    },
+    "",
+    {
+      "g": false
+    },
+    "APLET",
+    "VIEWS",
+    {
+      "x": 0.25,
+      "g": true
+    },
+    "",
+    "",
+    "",
+    {
+      "x": 0.25,
+      "g": false,
+      "f": 7,
+      "w": 4,
+      "d": true
+    },
+    "HP 39/40"
+  ],
+  [
+    {
+      "y": 0.5,
+      "g": true,
+      "f": 3
+    },
+    "",
+    {
+      "g": false,
+      "a": 4
+    },
+    "\n\n\nX\n\n\n\n\n\n1",
+    "\n\n\nY\n\n\n\n\n\n2",
+    "\n\n\nZ\n\n\n\n\n\n3",
+    "\n\n\nT\n\n\n\n\n\n4",
+    "\n\n\nU\n\n\n\n\n\n5",
+    "\n\n\nV\n\n\n\n\n\n6",
+    "\n\n\nP\n\n\n\n\n\n7",
+    "\n\n\nQ\n\n\n\n\n\n8",
+    "\n\n\nR\n\n\n\n\n\n9",
+    "\n\n\nθ\n\n\n\n\n\n0",
+    "\n\n\nW\n\n\n\n\n\n-",
+    "\n\n\nSPC\n\n\n\n\n\n+",
+    {
+      "a": 7,
+      "w": 2
+    },
+    "DEL",
+    {
+      "x": 0.25
+    },
+    "SYMB",
+    "PLOT",
+    "NUM",
+    {
+      "x": 0.25,
+      "g": true
+    },
+    "",
+    {
+      "g": false,
+      "a": 4
+    },
+    "\n\n\nN\n\n\n\n\n\n/",
+    "\n\n\nS\n\n\n\n\n\n*",
+    "\n\n\nW\n\n\n\n\n\n-"
+  ],
+  [
+    {
+      "a": 7,
+      "w": 1.5
+    },
+    "ALPHA",
+    {
+      "a": 4
+    },
+    "\n\n\nQ\n\n\n\n\n\n8",
+    "\n\n\nW\n\n\n\n\n\n-",
+    "\n\n\nE\n\n\n\n\n\nSIN",
+    "\n\n\nR\n\n\n\n\n\n9",
+    "\n\n\nT\n\n\n\n\n\n4",
+    "\n\n\nY\n\n\n\n\n\n2",
+    "\n\n\nU\n\n\n\n\n\n5",
+    "\n\n\nI\n\n\n\n\n\nLOG",
+    "\n\n\nO\n\n\n\n\n\n,",
+    "\n\n\nP\n\n\n\n\n\n7",
+    {
+      "a": 7
+    },
+    "[",
+    "]",
+    {
+      "g": true,
+      "w": 1.5
+    },
+    "",
+    {
+      "x": 0.25,
+      "g": false
+    },
+    "HOME",
+    "APLET",
+    "VIEWS",
+    {
+      "x": 0.25,
+      "a": 4
+    },
+    "\n\n\nP\n\n\n\n\n\n7",
+    "\n\n\nQ\n\n\n\n\n\n8",
+    "\n\n\nR\n\n\n\n\n\n9",
+    {
+      "h": 2
+    },
+    "\n\n\nSPC\n\n\n\n\n\n+"
+  ],
+  [
+    {
+      "g": true,
+      "a": 7,
+      "w": 1.75
+    },
+    "",
+    {
+      "g": false,
+      "a": 4
+    },
+    "\n\n\nA\n\n\n\n\n\nVARS",
+    "\n\n\nS\n\n\n\n\n\n*",
+    "\n\n\nD\n\n\n\n\n\nx,t,θ",
+    "\n\n\nF\n\n\n\n\n\nCOS",
+    "\n\n\nG\n\n\n\n\n\nTAN",
+    "\n\n\nH\n\n\n\n\n\nLN",
+    "\n\n\nJ\n\n\n\n\n\nX^2",
+    "\n\n\nK\n\n\n\n\n\nX^Y",
+    "\n\n\nL\n\n\n\n\n\n(",
+    "\n\n\n;\n\n\n\n\n\n(-)",
+    {
+      "g": true,
+      "a": 7
+    },
+    "",
+    {
+      "g": false,
+      "w": 2.25
+    },
+    "ENTER",
+    {
+      "x": 3.5,
+      "a": 4
+    },
+    "\n\n\nT\n\n\n\n\n\n4",
+    "\n\n\nU\n\n\n\n\n\n5",
+    "\n\n\nV\n\n\n\n\n\n6"
+  ],
+  [
+    {
+      "a": 7,
+      "w": 2.25
+    },
+    "ALPHA",
+    {
+      "a": 4
+    },
+    "\n\n\nZ\n\n\n\n\n\n3",
+    "\n\n\nX\n\n\n\n\n\n1",
+    "\n\n\nC\n\n\n\n\n\nd/dx",
+    "\n\n\nV\n\n\n\n\n\n6",
+    "\n\n\nB\n\n\n\n\n\nMATH",
+    "\n\n\nN\n\n\n\n\n\n/",
+    "\n\n\nM\n\n\n\n\n\n)",
+    "\n\n\nO\n\n\n\n\n\n,",
+    "\n\n\n:\n\n\n\n\n\n.",
+    "\n\n\nN\n\n\n\n\n\n/",
+    {
+      "a": 7,
+      "w": 2.75
+    },
+    "ALPHA",
+    {
+      "x": 1.25
+    },
+    "↑",
+    {
+      "x": 1.25,
+      "a": 4
+    },
+    "\n\n\nX\n\n\n\n\n\n1",
+    "\n\n\nY\n\n\n\n\n\n2",
+    "\n\n\nZ\n\n\n\n\n\n3",
+    {
+      "a": 7,
+      "h": 2
+    },
+    "ENTER"
+  ],
+  [
+    {
+      "w": 1.25
+    },
+    "SHIFT",
+    {
+      "g": true,
+      "w": 1.25
+    },
+    "",
+    {
+      "w": 1.25
+    },
+    "",
+    {
+      "g": false,
+      "a": 4,
+      "w": 5.75
+    },
+    "\n\n\nSPACE\n\n\n\n\n\n+",
+    {
+      "x": 0.5,
+      "g": true,
+      "a": 7,
+      "w": 1.25
+    },
+    "",
+    {
+      "w": 1.25
+    },
+    "",
+    {
+      "w": 1.25
+    },
+    "",
+    {
+      "g": false,
+      "w": 1.25
+    },
+    "SHIFT",
+    {
+      "x": 0.25
+    },
+    "←",
+    "↓",
+    "→",
+    {
+      "x": 0.25,
+      "a": 4,
+      "w": 2
+    },
+    "\n\n\nθ\n\n\n\n\n\n0",
+    "\n\n\n:\n\n\n\n\n\n."
+  ]
+]

@@ -15,7 +15,6 @@ Global
 	Model  "Q"
 	Class  50
 	Rom    "rom.49g"
-	Patch  "patch.49g"
 	Bitmap "real50g-lc.png"
 	Icon   "50g.ico"
 	Color  0 190 190 190
@@ -116,7 +115,7 @@ End
 Annunciator 6
 	Size 24 17
 	Offset 377 3
-	Down 557 923
+	Down 457 923
 End
 
 Button 11
