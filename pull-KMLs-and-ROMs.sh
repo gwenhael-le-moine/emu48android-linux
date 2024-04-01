@@ -22,7 +22,7 @@ mv ./skins/* ./
 rm -fr ./skins
 
 echo " …removing the medium versions"
-rm ./*-m.kml ./*-m.png ./*-mc.kml ./*-mc.png
+rm ./*-m.kml ./*-m.png ./*-mc.kml ./*-mc.png ./*-muc.kml ./*-muc.png
 
 echo "Pulling ROM for 38g"
 curl "https://www.hpcalc.org/hp38/pc/38grom.zip" --output - | funzip > "rom.38g"
