@@ -36,8 +36,8 @@ add_compile_options(-fpermissive)
 add_compile_options(-Wno-error=incompatible-pointer-types)
 
 if(CMAKE_BUILD_TYPE STREQUAL Release)
-	message("RELEASE BUILD")
-	add_compile_options(-Ofast)
+        message("RELEASE BUILD")
+        add_compile_options(-Ofast)
 endif()
 
 include_directories(src/main/cpp/win32)
@@ -80,7 +80,7 @@ add_library( # Sets the name of the library.
         src/main/cpp/core/pch.c
 #		src/main/cpp/core/pngcrc.c # Disabled to use new CRC function from lodepng.
         src/main/cpp/core/redeye.c
-		src/main/cpp/core/romcrc.c
+                src/main/cpp/core/romcrc.c
         src/main/cpp/core/rpl.c
         src/main/cpp/core/serial.c
         src/main/cpp/core/settings.c

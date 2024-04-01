@@ -15,11 +15,11 @@ if (keystorePropertiesFile.exists()) {
     println("""
             The keystore.properties file is not found, so, you will not be able to install an unsigned APK in an Android device.
             Please, in the root folder, create a keystore.jks file with the command:
-            
+
             keytool -genkey -keystore ./keystore.jks -keyalg RSA -validity 9125 -alias key0
-            
+
             and create the file ./keystore.properties , with the following properties:
-            
+
             storeFile=../keystore.jks
             storePassword=myPassword
             keyAlias=key0
