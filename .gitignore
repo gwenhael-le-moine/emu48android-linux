@@ -10,3 +10,4 @@
 /app/release
 /keystore.jks
 /app/keystore.properties
+/keystore.properties
