@@ -1,4 +1,4 @@
-.PHONY: release debug clean mrproper
+.PHONY: release debug clean mrproper keystore
 
 release:
 	./gradlew assembleRelease assembleReleaseUnitTest
@@ -12,3 +12,6 @@ clean:
 	./gradlew clean
 
 mrproper: clean
+
+keystore:
+	keytool -genkey -keystore ./keystore.jks -keyalg RSA -validity 9125 -alias key0
