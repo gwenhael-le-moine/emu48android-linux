@@ -8,7 +8,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 
 #pragma inline_depth(0)
 

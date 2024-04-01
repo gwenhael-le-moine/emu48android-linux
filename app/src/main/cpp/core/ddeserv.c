@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 #include "io.h"
 
 HDDEDATA CALLBACK DdeCallback(UINT iType,UINT iFmt,HCONV hConv,

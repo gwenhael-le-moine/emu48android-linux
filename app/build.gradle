@@ -63,6 +63,7 @@ android {
             ndk {
                 debugSymbolLevel 'FULL' // { SYMBOL_TABLE | FULL }
             }
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {

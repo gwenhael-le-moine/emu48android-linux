@@ -156,7 +156,7 @@ public class Serial {
 		}
 		if(usbConnection == null && usbPermission == UsbPermission.Unknown && !usbManager.hasPermission(driver.getDevice())) {
 			usbPermission = UsbPermission.Requested;
-			PendingIntent usbPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(INTENT_ACTION_GRANT_USB), 0);
+			PendingIntent usbPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(INTENT_ACTION_GRANT_USB), PendingIntent.FLAG_IMMUTABLE);
 			usbManager.requestPermission(driver.getDevice(), usbPermissionIntent);
 			if(debug) Log.d(TAG, "Request permission");
 			connectionStatus = "serial_connection_failed_user_has_not_given_permission";

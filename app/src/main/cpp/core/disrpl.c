@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 #include "disrpl.h"
 
 DWORD dwRplPlatform = RPL_P3;				// current RPL platform

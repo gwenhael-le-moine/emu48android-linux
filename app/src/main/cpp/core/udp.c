@@ -7,7 +7,7 @@
  *
  */
 #include "pch.h"
-#include "Emu48.h"
+#include "emu48.h"
 
 TCHAR szUdpServer[1024] = _T("localhost");
 WORD  wUdpPort = 5025;						// scpi-raw
