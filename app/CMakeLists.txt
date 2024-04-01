@@ -1,6 +1,8 @@
 # For more information about using CMake with Android Studio, read the
 # documentation: https://d.android.com/studio/projects/add-native-code.html
 
+project(Emu48android-ng)
+
 # Sets the minimum version of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
@@ -32,8 +34,8 @@ add_compile_options(-DLODEPNG_NO_COMPILE_CPP)
 add_compile_options(-DEMUXX=48)
 
 if(CMAKE_BUILD_TYPE STREQUAL Release)
-	message("RELEASE BUILD")
-	add_compile_options(-Ofast)
+        message("RELEASE BUILD")
+        add_compile_options(-Ofast)
 endif()
 
 include_directories(src/main/cpp/win32)
@@ -76,7 +78,7 @@ add_library( # Sets the name of the library.
         src/main/cpp/core/pch.c
 #		src/main/cpp/core/pngcrc.c # Disabled to use new CRC function from lodepng.
         src/main/cpp/core/redeye.c
-		src/main/cpp/core/romcrc.c
+                src/main/cpp/core/romcrc.c
         src/main/cpp/core/rpl.c
         src/main/cpp/core/serial.c
         src/main/cpp/core/settings.c
