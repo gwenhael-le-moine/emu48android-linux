@@ -1,4 +1,4 @@
-package org.emulator.forty.eight;
+package eu.luoi.forty.eight;
 
 import org.junit.Test;
 

@@ -28,10 +28,10 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace 'org.emulator.forty.eight'
+    namespace 'eu.luoi.forty.eight'
     compileSdk 34
     defaultConfig {
-        applicationId "org.emulator.forty.eight"
+        applicationId "eu.luoi.forty.eight"
         minSdk 21
         targetSdk 34
         versionCode 27
@@ -43,6 +43,8 @@ android {
                 cppFlags '-std=c++11 -fpermissive -Wno-error=incompatible-pointer-types'
             }
         }
+        applicationIdSuffix 'gwh'
+        versionNameSuffix 'gwh'
     }
 
     if (canSign) {

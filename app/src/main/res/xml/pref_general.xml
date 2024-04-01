@@ -107,7 +107,7 @@
             android:entryValues="@array/settings_background_fallback_color_value"
             android:defaultValue="0"
             />
-        <!--<org.emulator.calculator.helpers.colorpicker.ColorPickerPreferenceCompat-->
+        <!--<eu.luoi.calculator.helpers.colorpicker.ColorPickerPreferenceCompat-->
             <!--android:key="settings_background_custom_color"-->
             <!--android:title="@string/settings_background_custom_color_title"-->
             <!--android:summary="@string/settings_background_custom_color_summary"-->

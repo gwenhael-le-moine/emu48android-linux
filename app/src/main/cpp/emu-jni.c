@@ -112,15 +112,15 @@ void mainViewUpdateCallback() {
 //		int param1 = ((mainViewRectangleToUpdate.left & 0xFFFF) << 16) | (mainViewRectangleToUpdate.top & 0xFFFF);
 //		int param2 = ((mainViewRectangleToUpdate.right & 0xFFFF) << 16) | (mainViewRectangleToUpdate.bottom & 0xFFFF);
 //		mainViewCallback(CALLBACK_TYPE_INVALIDATE,
-//		                 param1,
-//		                 param2,
-//		                 NULL, NULL);
+//                               param1,
+//                               param2,
+//                               NULL, NULL);
 //		SetRectEmpty(&mainViewRectangleToUpdate);
 //	} else
-		mainViewCallback(CALLBACK_TYPE_INVALIDATE,
-		                 0,
-		                 0,
-		                 NULL, NULL);
+                mainViewCallback(CALLBACK_TYPE_INVALIDATE,
+                                 0,
+                                 0,
+                                 NULL, NULL);
 }
 
 void mainViewResizeCallback(int x, int y) {
@@ -209,17 +209,17 @@ void sendMenuItemCommand(int menuItem) {
 TCHAR lastKMLFilename[MAX_PATH];
 
 BOOL getFirstKMLFilenameForType(BYTE chipsetType) {
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "getFirstKMLFilenameForType", "(C)I");
-			int result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, (char)chipsetType);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-			return result ? TRUE : FALSE;
-		}
-	}
-	return FALSE;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "getFirstKMLFilenameForType", "(C)I");
+                        int result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, (char)chipsetType);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                        return result ? TRUE : FALSE;
+                }
+        }
+        return FALSE;
 }
 
 
@@ -306,133 +306,133 @@ void setKMLIcon(int imageWidth, int imageHeight, LPBYTE buffer, int bufferSize) 
 }
 
 int openSerialPort(const TCHAR * serialPort) {
-	int result = -1;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "openSerialPort", "(Ljava/lang/String;)I");
-			jstring utfFileURL = (*jniEnv)->NewStringUTF(jniEnv, serialPort);
-			result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, utfFileURL);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return result;
+        int result = -1;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "openSerialPort", "(Ljava/lang/String;)I");
+                        jstring utfFileURL = (*jniEnv)->NewStringUTF(jniEnv, serialPort);
+                        result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, utfFileURL);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return result;
 }
 
 int closeSerialPort(int serialPortId) {
-	int result = -1;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "closeSerialPort", "(I)I");
-			result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return result;
+        int result = -1;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "closeSerialPort", "(I)I");
+                        result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return result;
 }
 
 int setSerialPortParameters(int serialPortId, int baudRate) {
-	int result = -1;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "setSerialPortParameters", "(II)I");
-			result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId, baudRate);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return result;
+        int result = -1;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "setSerialPortParameters", "(II)I");
+                        result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId, baudRate);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return result;
 }
 
 int readSerialPort(int serialPortId, LPBYTE buffer, int nNumberOfBytesToRead) {
-	int nNumberOfReadBytes = 0;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv && buffer && nNumberOfBytesToRead > 0) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "readSerialPort", "(II)[B");
-			jbyteArray readBytes = (jbyteArray)(*jniEnv)->CallObjectMethod(jniEnv, mainActivity, midStr, serialPortId, nNumberOfBytesToRead);
-			nNumberOfReadBytes = (*jniEnv)->GetArrayLength(jniEnv, readBytes);
-			jbyte* elements = (*jniEnv)->GetByteArrayElements(jniEnv, readBytes, NULL);
-			if (elements) {
-				for(int i = 0; i < nNumberOfReadBytes; i++)
-					buffer[i] = elements[i];
-				(*jniEnv)->ReleaseByteArrayElements(jniEnv, readBytes, elements, JNI_ABORT);
-			}
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return nNumberOfReadBytes;
+        int nNumberOfReadBytes = 0;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv && buffer && nNumberOfBytesToRead > 0) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "readSerialPort", "(II)[B");
+                        jbyteArray readBytes = (jbyteArray)(*jniEnv)->CallObjectMethod(jniEnv, mainActivity, midStr, serialPortId, nNumberOfBytesToRead);
+                        nNumberOfReadBytes = (*jniEnv)->GetArrayLength(jniEnv, readBytes);
+                        jbyte* elements = (*jniEnv)->GetByteArrayElements(jniEnv, readBytes, NULL);
+                        if (elements) {
+                                for(int i = 0; i < nNumberOfReadBytes; i++)
+                                        buffer[i] = elements[i];
+                                (*jniEnv)->ReleaseByteArrayElements(jniEnv, readBytes, elements, JNI_ABORT);
+                        }
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return nNumberOfReadBytes;
 }
 
 int writeSerialPort(int serialPortId, LPBYTE buffer, int bufferSize) {
-	int result = 0;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "writeSerialPort", "(I[B)I");
+        int result = 0;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "writeSerialPort", "(I[B)I");
 
-			jbyteArray javaBuffer = NULL;
-			if(buffer) {
-				javaBuffer = (*jniEnv)->NewByteArray(jniEnv, bufferSize);
-				(*jniEnv)->SetByteArrayRegion(jniEnv, javaBuffer, 0, bufferSize, (jbyte *) buffer);
-			}
-			result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId, javaBuffer);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return result;
+                        jbyteArray javaBuffer = NULL;
+                        if(buffer) {
+                                javaBuffer = (*jniEnv)->NewByteArray(jniEnv, bufferSize);
+                                (*jniEnv)->SetByteArrayRegion(jniEnv, javaBuffer, 0, bufferSize, (jbyte *) buffer);
+                        }
+                        result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId, javaBuffer);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return result;
 }
 
 int serialPortPurgeComm(int serialPortId, int dwFlags) {
-	int result = 0;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "serialPortPurgeComm", "(II)I");
-			result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return result;
+        int result = 0;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "serialPortPurgeComm", "(II)I");
+                        result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return result;
 }
 
 int serialPortSetBreak(int serialPortId) {
-	int result = 0;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "serialPortSetBreak", "(I)I");
-			result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return result;
+        int result = 0;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "serialPortSetBreak", "(I)I");
+                        result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return result;
 }
 
 int serialPortClearBreak(int serialPortId) {
-	int result = 0;
-	JNIEnv *jniEnv = getJNIEnvironment();
-	if(jniEnv) {
-		jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
-		if(mainActivityClass) {
-			jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "serialPortClearBreak", "(I)I");
-			result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
-			(*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
-		}
-	}
-	return result;
+        int result = 0;
+        JNIEnv *jniEnv = getJNIEnvironment();
+        if(jniEnv) {
+                jclass mainActivityClass = (*jniEnv)->GetObjectClass(jniEnv, mainActivity);
+                if(mainActivityClass) {
+                        jmethodID midStr = (*jniEnv)->GetMethodID(jniEnv, mainActivityClass, "serialPortClearBreak", "(I)I");
+                        result = (*jniEnv)->CallIntMethod(jniEnv, mainActivity, midStr, serialPortId);
+                        (*jniEnv)->DeleteLocalRef(jniEnv, mainActivityClass);
+                }
+        }
+        return result;
 }
 
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_start(JNIEnv *env, jobject thisz, jobject assetMgr, jobject activity) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_start(JNIEnv *env, jobject thisz, jobject assetMgr, jobject activity) {
 
     chooseCurrentKmlMode = ChooseKmlMode_UNKNOWN;
     szChosenCurrentKml[0] = '\0';
@@ -483,7 +483,7 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_start(JNIEnv *env,
 
     szCurrentKml[0] = 0;					// no KML file selected
     SetSpeed(bRealSpeed);					// set speed
-	//MruInit(4);								// init MRU entries
+        //MruInit(4);								// init MRU entries
 
     // create auto event handle
     hEventShutdn = CreateEvent(NULL,FALSE,FALSE,NULL);
@@ -511,29 +511,29 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_start(JNIEnv *env,
     while (nState!=nNextState) Sleep(0);	// wait for thread initialized
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_stop(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_stop(JNIEnv *env, jobject thisz) {
 
     if (hThread)
-		SwitchToState(SM_RETURN);	// exit emulation thread
+                SwitchToState(SM_RETURN);	// exit emulation thread
 
     ReleaseDC(hWnd, hWindowDC);
     DestroyWindow(hWnd);
-	hWindowDC = NULL;						// hWindowDC isn't valid any more
-	hWnd = NULL;
+        hWindowDC = NULL;						// hWindowDC isn't valid any more
+        hWnd = NULL;
 
-	// Prevent crash+++
-	// FORTIFY: pthread_mutex_destroy called on a destroyed mutex (0x<sanitized>)
-	//  DeleteCriticalSection(&csGDILock);
-	//	DeleteCriticalSection(&csLcdLock);
-	//	DeleteCriticalSection(&csKeyLock);
-	//	DeleteCriticalSection(&csIOLock);
-	//	DeleteCriticalSection(&csT1Lock);
-	//	DeleteCriticalSection(&csT2Lock);
-	//	DeleteCriticalSection(&csTxdLock);
-	//	DeleteCriticalSection(&csRecvLock);
-	//	DeleteCriticalSection(&csSlowLock);
-	//	DeleteCriticalSection(&csDbgLock);
-	// Prevent crash---
+        // Prevent crash+++
+        // FORTIFY: pthread_mutex_destroy called on a destroyed mutex (0x<sanitized>)
+        //  DeleteCriticalSection(&csGDILock);
+        //	DeleteCriticalSection(&csLcdLock);
+        //	DeleteCriticalSection(&csKeyLock);
+        //	DeleteCriticalSection(&csIOLock);
+        //	DeleteCriticalSection(&csT1Lock);
+        //	DeleteCriticalSection(&csT2Lock);
+        //	DeleteCriticalSection(&csTxdLock);
+        //	DeleteCriticalSection(&csRecvLock);
+        //	DeleteCriticalSection(&csSlowLock);
+        //	DeleteCriticalSection(&csDbgLock);
+        // Prevent crash---
 
     SoundClose();							// close waveform-audio output device
     soundEnabled = FALSE;
@@ -545,7 +545,7 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_stop(JNIEnv *env, 
 }
 
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_changeBitmap(JNIEnv *env, jobject thisz, jobject bitmapMainScreen0) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_changeBitmap(JNIEnv *env, jobject thisz, jobject bitmapMainScreen0) {
 
     if(bitmapMainScreen) {
         (*env)->DeleteGlobalRef(env, bitmapMainScreen);
@@ -559,95 +559,95 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_changeBitmap(JNIEn
     }
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_draw(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_draw(JNIEnv *env, jobject thisz) {
     draw();
 }
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_buttonDown(JNIEnv *env, jobject thisz, jint x, jint y) {
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_buttonDown(JNIEnv *env, jobject thisz, jint x, jint y) {
     return buttonDown(x, y) ? JNI_TRUE : JNI_FALSE;
 }
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_buttonUp(JNIEnv *env, jobject thisz, jint x, jint y) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_buttonUp(JNIEnv *env, jobject thisz, jint x, jint y) {
     buttonUp(x, y);
 }
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_keyDown(JNIEnv *env, jobject thisz, jint virtKey) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_keyDown(JNIEnv *env, jobject thisz, jint virtKey) {
     keyDown(virtKey);
 }
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_keyUp(JNIEnv *env, jobject thisz, jint virtKey) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_keyUp(JNIEnv *env, jobject thisz, jint virtKey) {
     keyUp(virtKey);
 }
 
 
 
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_isDocumentAvailable(JNIEnv *env, jobject thisz) {
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_isDocumentAvailable(JNIEnv *env, jobject thisz) {
     return bDocumentAvail ? JNI_TRUE : JNI_FALSE;
 }
-JNIEXPORT jstring JNICALL Java_org_emulator_calculator_NativeLib_getCurrentFilename(JNIEnv *env, jobject thisz) {
+JNIEXPORT jstring JNICALL Java_eu_luoi_calculator_NativeLib_getCurrentFilename(JNIEnv *env, jobject thisz) {
     jstring result = (*env)->NewStringUTF(env, szCurrentFilename);
     return result;
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getCurrentModel(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getCurrentModel(JNIEnv *env, jobject thisz) {
     return cCurrentRomType;
 }
 
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_isBackup(JNIEnv *env, jobject thisz) {
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_isBackup(JNIEnv *env, jobject thisz) {
     return (jboolean) (bBackup ? JNI_TRUE : JNI_FALSE);
 }
 
-JNIEXPORT jstring JNICALL Java_org_emulator_calculator_NativeLib_getKMLLog(JNIEnv *env, jobject thisz) {
+JNIEXPORT jstring JNICALL Java_eu_luoi_calculator_NativeLib_getKMLLog(JNIEnv *env, jobject thisz) {
     jstring result = (*env)->NewStringUTF(env, szKmlLog);
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_org_emulator_calculator_NativeLib_getKMLTitle(JNIEnv *env, jobject thisz) {
+JNIEXPORT jstring JNICALL Java_eu_luoi_calculator_NativeLib_getKMLTitle(JNIEnv *env, jobject thisz) {
     jstring result = (*env)->NewStringUTF(env, szKmlTitle);
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_org_emulator_calculator_NativeLib_getCurrentKml(JNIEnv *env, jobject thisz) {
-	jstring result = (*env)->NewStringUTF(env, szCurrentKml);
-	return result;
+JNIEXPORT jstring JNICALL Java_eu_luoi_calculator_NativeLib_getCurrentKml(JNIEnv *env, jobject thisz) {
+        jstring result = (*env)->NewStringUTF(env, szCurrentKml);
+        return result;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setCurrentKml(JNIEnv *env, jobject thisz, jstring currentKml) {
-	const char *currentKmlUTF8 = (*env)->GetStringUTFChars(env, currentKml, NULL);
-	_tcscpy(szCurrentKml, currentKmlUTF8);
-	(*env)->ReleaseStringUTFChars(env, currentKml, currentKmlUTF8);
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_setCurrentKml(JNIEnv *env, jobject thisz, jstring currentKml) {
+        const char *currentKmlUTF8 = (*env)->GetStringUTFChars(env, currentKml, NULL);
+        _tcscpy(szCurrentKml, currentKmlUTF8);
+        (*env)->ReleaseStringUTFChars(env, currentKml, currentKmlUTF8);
 }
 
-JNIEXPORT jstring JNICALL Java_org_emulator_calculator_NativeLib_getEmuDirectory(JNIEnv *env, jobject thisz) {
-	jstring result = (*env)->NewStringUTF(env, szEmuDirectory);
-	return result;
+JNIEXPORT jstring JNICALL Java_eu_luoi_calculator_NativeLib_getEmuDirectory(JNIEnv *env, jobject thisz) {
+        jstring result = (*env)->NewStringUTF(env, szEmuDirectory);
+        return result;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setEmuDirectory(JNIEnv *env, jobject thisz, jstring emuDirectory) {
-	const char *emuDirectoryUTF8 = (*env)->GetStringUTFChars(env, emuDirectory, NULL);
-	_tcscpy(szEmuDirectory, emuDirectoryUTF8);
-	_tcscpy(szRomDirectory, emuDirectoryUTF8);
-	(*env)->ReleaseStringUTFChars(env, emuDirectory, emuDirectoryUTF8);
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_setEmuDirectory(JNIEnv *env, jobject thisz, jstring emuDirectory) {
+        const char *emuDirectoryUTF8 = (*env)->GetStringUTFChars(env, emuDirectory, NULL);
+        _tcscpy(szEmuDirectory, emuDirectoryUTF8);
+        _tcscpy(szRomDirectory, emuDirectoryUTF8);
+        (*env)->ReleaseStringUTFChars(env, emuDirectory, emuDirectoryUTF8);
 }
 
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_getPort1Plugged(JNIEnv *env, jobject thisz) {
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_getPort1Plugged(JNIEnv *env, jobject thisz) {
     return (jboolean) ((Chipset.cards_status & PORT1_PRESENT) != 0);
 }
 
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_getPort1Writable(JNIEnv *env, jobject thisz) {
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_getPort1Writable(JNIEnv *env, jobject thisz) {
     return (jboolean) ((Chipset.cards_status & PORT1_WRITE) != 0);
 }
 
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_getSoundEnabled(JNIEnv *env, jobject thisz) {
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_getSoundEnabled(JNIEnv *env, jobject thisz) {
     return (jboolean) soundAvailable;
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getGlobalColor(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getGlobalColor(JNIEnv *env, jobject thisz) {
     return (jint) dwTColor;
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getMacroState(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getMacroState(JNIEnv *env, jobject thisz) {
     return nMacroState;
 }
 
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileNew(JNIEnv *env, jobject thisz, jstring kmlFilename, jstring kmlFolder) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onFileNew(JNIEnv *env, jobject thisz, jstring kmlFilename, jstring kmlFolder) {
     if (bDocumentAvail) {
         SwitchToState(SM_INVALID);
         if(bAutoSave) {
@@ -660,21 +660,21 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileNew(JNIEnv *
     _tcscpy(szChosenCurrentKml, filenameUTF8);
     (*env)->ReleaseStringUTFChars(env, kmlFilename, filenameUTF8);
 
-	TCHAR * documentScheme = _T("document:");
-	TCHAR * documentSchemeFound = _tcsstr(szChosenCurrentKml, documentScheme);
+        TCHAR * documentScheme = _T("document:");
+        TCHAR * documentSchemeFound = _tcsstr(szChosenCurrentKml, documentScheme);
     if(kmlFolder) {
-	    const char *kmlFolderUTF8 = (*env)->GetStringUTFChars(env, kmlFolder, NULL);
+            const char *kmlFolderUTF8 = (*env)->GetStringUTFChars(env, kmlFolder, NULL);
         // The folder URL is separated from the script filename and comes from the JSON settings in the state file.
-	    _tcscpy(szEmuDirectory, kmlFolderUTF8);
-	    _tcscpy(szRomDirectory, kmlFolderUTF8);
-	    (*env)->ReleaseStringUTFChars(env, kmlFolder, kmlFolderUTF8);
+            _tcscpy(szEmuDirectory, kmlFolderUTF8);
+            _tcscpy(szRomDirectory, kmlFolderUTF8);
+            (*env)->ReleaseStringUTFChars(env, kmlFolder, kmlFolderUTF8);
     } else if(documentSchemeFound) {
-	    // Keep the compatibility by allowing to put the KML folder combined with the KML script filename with a document: scheme.
-	    _tcscpy(szEmuDirectory, szChosenCurrentKml + _tcslen(documentScheme) * sizeof(TCHAR));
+            // Keep the compatibility by allowing to put the KML folder combined with the KML script filename with a document: scheme.
+            _tcscpy(szEmuDirectory, szChosenCurrentKml + _tcslen(documentScheme) * sizeof(TCHAR));
         TCHAR * filename = _tcschr(szEmuDirectory, _T('|'));
-	    if(filename)
+            if(filename)
             *filename = _T('\0');
-	    _tcscpy(szRomDirectory, szEmuDirectory);
+            _tcscpy(szRomDirectory, szEmuDirectory);
     } else {
         _tcscpy(szEmuDirectory, "assets/calculators/");
         _tcscpy(szRomDirectory, "assets/calculators/");
@@ -694,7 +694,7 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileNew(JNIEnv *
     }
     return result;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileOpen(JNIEnv *env, jobject thisz, jstring stateFilename, jstring kmlFolder) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onFileOpen(JNIEnv *env, jobject thisz, jstring stateFilename, jstring kmlFolder) {
     if (bDocumentAvail) {
         SwitchToState(SM_INVALID);
         if(bAutoSave) {
@@ -703,32 +703,32 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileOpen(JNIEnv 
     }
     const char *stateFilenameUTF8 = (*env)->GetStringUTFChars(env, stateFilename, NULL);
     _tcscpy(szBufferFilename, stateFilenameUTF8);
-	(*env)->ReleaseStringUTFChars(env, stateFilename, stateFilenameUTF8);
+        (*env)->ReleaseStringUTFChars(env, stateFilename, stateFilenameUTF8);
 
-	chooseCurrentKmlMode = ChooseKmlMode_FILE_OPEN;
-	if(kmlFolder) {
-		const char *kmlFolderUTF8 = (*env)->GetStringUTFChars(env, kmlFolder, NULL);
-		// The folder URL is separated from the script filename (not in the document: URL) and comes from the JSON settings in the state file.
-		_tcscpy(szEmuDirectory, kmlFolderUTF8);
-		_tcscpy(szRomDirectory, kmlFolderUTF8);
-		(*env)->ReleaseStringUTFChars(env, kmlFolder, kmlFolderUTF8);
-		chooseCurrentKmlMode = ChooseKmlMode_FILE_OPEN_WITH_FOLDER;
-	} else {
-		// We are loading a KML script from the embedded asset folder inside the Android App.
-		// We directly set the variable "szEmuDirectory"/"szRomDirectory" and "szCurrentAssetDirectory" with the KML folder
-		// which contain the script and its dependencies like the includes, the images and the ROMs.
-		_tcscpy(szEmuDirectory, "assets/calculators/");
-		_tcscpy(szRomDirectory, "assets/calculators/");
-	}
+        chooseCurrentKmlMode = ChooseKmlMode_FILE_OPEN;
+        if(kmlFolder) {
+                const char *kmlFolderUTF8 = (*env)->GetStringUTFChars(env, kmlFolder, NULL);
+                // The folder URL is separated from the script filename (not in the document: URL) and comes from the JSON settings in the state file.
+                _tcscpy(szEmuDirectory, kmlFolderUTF8);
+                _tcscpy(szRomDirectory, kmlFolderUTF8);
+                (*env)->ReleaseStringUTFChars(env, kmlFolder, kmlFolderUTF8);
+                chooseCurrentKmlMode = ChooseKmlMode_FILE_OPEN_WITH_FOLDER;
+        } else {
+                // We are loading a KML script from the embedded asset folder inside the Android App.
+                // We directly set the variable "szEmuDirectory"/"szRomDirectory" and "szCurrentAssetDirectory" with the KML folder
+                // which contain the script and its dependencies like the includes, the images and the ROMs.
+                _tcscpy(szEmuDirectory, "assets/calculators/");
+                _tcscpy(szRomDirectory, "assets/calculators/");
+        }
 
-	kmlFileNotFound = FALSE;
+        kmlFileNotFound = FALSE;
     lastKMLFilename[0] = '\0';
-	// It is to open a new document, so we will trick the next KillKML() to prevent to UnmapROM()!!!
-	// pbyRom is then restored in the unused win32 GetKeyboardLayoutName(), just after KillKML() but before the final InitKML(). Crazy!
-	if (pbyRom) {
-		pbyRomBackup = pbyRom;
-		pbyRom = NULL;
-	}
+        // It is to open a new document, so we will trick the next KillKML() to prevent to UnmapROM()!!!
+        // pbyRom is then restored in the unused win32 GetKeyboardLayoutName(), just after KillKML() but before the final InitKML(). Crazy!
+        if (pbyRom) {
+                pbyRomBackup = pbyRom;
+                pbyRom = NULL;
+        }
     BOOL result = OpenDocument(szBufferFilename);
     if(pbyRomBackup) pbyRomBackup = NULL;
     chooseCurrentKmlMode = ChooseKmlMode_UNKNOWN;
@@ -742,12 +742,12 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileOpen(JNIEnv 
         result = -2;
     }
     if(kmlFileNotFound) {
-	    kmlFileNotFound = FALSE;
-	    result = -3;
+            kmlFileNotFound = FALSE;
+            result = -3;
     }
     return result;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileSave(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onFileSave(JNIEnv *env, jobject thisz) {
     // szBufferFilename must be set before calling that!!!
     BOOL result = FALSE;
     if (bDocumentAvail)
@@ -759,7 +759,7 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileSave(JNIEnv 
     }
     return result;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileSaveAs(JNIEnv *env, jobject thisz, jstring newStateFilename) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onFileSaveAs(JNIEnv *env, jobject thisz, jstring newStateFilename) {
     const char *newStateFilenameUTF8 = (*env)->GetStringUTFChars(env, newStateFilename , NULL) ;
 
     BOOL result = FALSE;
@@ -776,7 +776,7 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileSaveAs(JNIEn
     return result;
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileClose(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onFileClose(JNIEnv *env, jobject thisz) {
     if (bDocumentAvail)
     {
         SwitchToState(SM_INVALID);
@@ -792,7 +792,7 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onFileClose(JNIEnv
     return FALSE;
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onObjectLoad(JNIEnv *env, jobject thisz, jstring filename) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onObjectLoad(JNIEnv *env, jobject thisz, jstring filename) {
     const char *filenameUTF8 = (*env)->GetStringUTFChars(env, filename , NULL) ;
 
     SuspendDebugger();						// suspend debugger
@@ -872,11 +872,11 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onObjectLoad(JNIEn
     return TRUE;
 }
 
-JNIEXPORT jobjectArray JNICALL Java_org_emulator_calculator_NativeLib_getObjectsToSave(JNIEnv *env, jobject thisz) {
-	return 0;
+JNIEXPORT jobjectArray JNICALL Java_eu_luoi_calculator_NativeLib_getObjectsToSave(JNIEnv *env, jobject thisz) {
+        return 0;
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onObjectSave(JNIEnv *env, jobject thisz, jstring filename, jbooleanArray objectsToSaveItemChecked) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onObjectSave(JNIEnv *env, jobject thisz, jstring filename, jbooleanArray objectsToSaveItemChecked) {
 
     const char *filenameUTF8 = (*env)->GetStringUTFChars(env, filename , NULL) ;
 
@@ -906,7 +906,7 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onObjectSave(JNIEn
     return TRUE;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onViewCopy(JNIEnv *env, jobject thisz, jobject bitmapScreen) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onViewCopy(JNIEnv *env, jobject thisz, jobject bitmapScreen) {
 
     AndroidBitmapInfo bitmapScreenInfo;
     int ret = AndroidBitmap_getInfo(env, bitmapScreen, &bitmapScreenInfo);
@@ -1009,19 +1009,19 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onViewCopy(JNIEnv 
     AndroidBitmap_unlockPixels(env, bitmapScreen);
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onStackCopyVisible(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onStackCopyVisible(JNIEnv *env, jobject thisz) {
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onStackCopy(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onStackCopy(JNIEnv *env, jobject thisz) {
     OnStackCopy();
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onStackPaste(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onStackPaste(JNIEnv *env, jobject thisz) {
     //TODO Memory leak -> No GlobalFree of the paste data!!!!
     OnStackPaste();
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onViewReset(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onViewReset(JNIEnv *env, jobject thisz) {
     if (nState != SM_RUN)
         return;
     SwitchToState(SM_SLEEP);
@@ -1029,7 +1029,7 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onViewReset(JNIEnv
     SwitchToState(SM_RUN);
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onViewScript(JNIEnv *env, jobject thisz, jstring kmlFilename, jstring kmlFolder) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_onViewScript(JNIEnv *env, jobject thisz, jstring kmlFilename, jstring kmlFolder) {
 
     TCHAR szKmlFile[MAX_PATH];
     SwitchToState(SM_INVALID);
@@ -1041,30 +1041,30 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onViewScript(JNIEn
     _tcscpy(szCurrentKml, filenameUTF8);
     (*env)->ReleaseStringUTFChars(env, kmlFilename, filenameUTF8);
 
-	if(kmlFolder) {
-		const char * kmlFolderUTF8 = (*env)->GetStringUTFChars(env, kmlFolder, NULL);
-		// The folder URL is separated from the script filename and comes from the JSON settings in the state file.
-		_tcscpy(szEmuDirectory, kmlFolderUTF8);
-		_tcscpy(szRomDirectory, kmlFolderUTF8);
-		(*env)->ReleaseStringUTFChars(env, kmlFolder, kmlFolderUTF8);
-	} else {
-		// We are loading a KML script from the embedded asset folder inside the Android App.
-		// We directly set the variable "szEmuDirectory"/"szRomDirectory" and "szCurrentAssetDirectory" with the KML folder
-		// which contain the script and its dependencies like the includes, the images and the ROMs.
-		_tcscpy(szEmuDirectory, "assets/calculators/");
-		_tcscpy(szRomDirectory, "assets/calculators/");
-	}
+        if(kmlFolder) {
+                const char * kmlFolderUTF8 = (*env)->GetStringUTFChars(env, kmlFolder, NULL);
+                // The folder URL is separated from the script filename and comes from the JSON settings in the state file.
+                _tcscpy(szEmuDirectory, kmlFolderUTF8);
+                _tcscpy(szRomDirectory, kmlFolderUTF8);
+                (*env)->ReleaseStringUTFChars(env, kmlFolder, kmlFolderUTF8);
+        } else {
+                // We are loading a KML script from the embedded asset folder inside the Android App.
+                // We directly set the variable "szEmuDirectory"/"szRomDirectory" and "szCurrentAssetDirectory" with the KML folder
+                // which contain the script and its dependencies like the includes, the images and the ROMs.
+                _tcscpy(szEmuDirectory, "assets/calculators/");
+                _tcscpy(szRomDirectory, "assets/calculators/");
+        }
 
-	chooseCurrentKmlMode = ChooseKmlMode_CHANGE_KML;
+        chooseCurrentKmlMode = ChooseKmlMode_CHANGE_KML;
 
-	// It is to open a new document, so we will trick the next KillKML() to prevent to UnmapROM()!!!
-	// pbyRom is then restored in the unused win32 GetKeyboardLayoutName(), just after KillKML() but before the final InitKML(). Crazy!
-	if (pbyRom) {
-		pbyRomBackup = pbyRom;
-		pbyRom = NULL;
-	}
-	BOOL bSucc = InitKML(szCurrentKml, FALSE);
-	if(pbyRomBackup) pbyRomBackup = NULL;
+        // It is to open a new document, so we will trick the next KillKML() to prevent to UnmapROM()!!!
+        // pbyRom is then restored in the unused win32 GetKeyboardLayoutName(), just after KillKML() but before the final InitKML(). Crazy!
+        if (pbyRom) {
+                pbyRomBackup = pbyRom;
+                pbyRom = NULL;
+        }
+        BOOL bSucc = InitKML(szCurrentKml, FALSE);
+        if(pbyRomBackup) pbyRomBackup = NULL;
 
     if(!bSucc) {
         // restore KML script file name
@@ -1098,7 +1098,7 @@ JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_onViewScript(JNIEn
     return bSucc;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onBackupSave(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onBackupSave(JNIEnv *env, jobject thisz) {
     UINT nOldState;
     if (pbyRom == NULL) return;
     nOldState = SwitchToState(SM_INVALID);
@@ -1106,17 +1106,17 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onBackupSave(JNIEn
     SwitchToState(nOldState);
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onBackupRestore(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onBackupRestore(JNIEnv *env, jobject thisz) {
     SwitchToState(SM_INVALID);
     RestoreBackup();
     if (pbyRom) SwitchToState(SM_RUN);
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onBackupDelete(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onBackupDelete(JNIEnv *env, jobject thisz) {
     ResetBackup();
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onToolMacroNew(JNIEnv *env, jobject thisz, jstring filename) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onToolMacroNew(JNIEnv *env, jobject thisz, jstring filename) {
     const char *filenameUTF8 = (*env)->GetStringUTFChars(env, filename , NULL);
     _tcscpy(getSaveObjectFilenameResult, filenameUTF8);
     (*env)->ReleaseStringUTFChars(env, filename, filenameUTF8);
@@ -1126,7 +1126,7 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onToolMacroNew(JNI
     currentDialogBoxMode = DialogBoxMode_UNKNOWN;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onToolMacroPlay(JNIEnv *env, jobject thisz, jstring filename) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onToolMacroPlay(JNIEnv *env, jobject thisz, jstring filename) {
     const char *filenameUTF8 = (*env)->GetStringUTFChars(env, filename , NULL);
     _tcscpy(getSaveObjectFilenameResult, filenameUTF8);
     (*env)->ReleaseStringUTFChars(env, filename, filenameUTF8);
@@ -1136,51 +1136,51 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onToolMacroPlay(JN
     currentDialogBoxMode = DialogBoxMode_UNKNOWN;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_onToolMacroStop(JNIEnv *env, jobject thisz) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_onToolMacroStop(JNIEnv *env, jobject thisz) {
     OnToolMacroStop();
 }
 
 
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_onLoadFlashROM(JNIEnv *env, jobject thisz, jstring filename) {
-	const char *filenameUTF8 = (*env)->GetStringUTFChars(env, filename , NULL);
-	if (bDocumentAvail)
-		SwitchToState(SM_INVALID);
-	UnmapRom();
-	BYTE cCurrentRomTypeBackup = cCurrentRomType;
-	cCurrentRomType = 'Q'; // Fake the model to allow to load the ROM in RW!
-	BOOL result = MapRom(filenameUTF8);
-	cCurrentRomType = cCurrentRomTypeBackup;
-	if(result) {
-		UpdatePatches(TRUE);                    // Apply the patch again if needed (not tested!)
-		if (!CrcRom(&wRomCrc))				    // build patched ROM fingerprint and check for unpacked data
-			result = FALSE;
-		if (result && bDocumentAvail) {
-			if (Chipset.wRomCrc != wRomCrc)     // ROM changed
-			{
-				CpuReset();
-				Chipset.Shutdn = FALSE;         // automatic restart
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_onLoadFlashROM(JNIEnv *env, jobject thisz, jstring filename) {
+        const char *filenameUTF8 = (*env)->GetStringUTFChars(env, filename , NULL);
+        if (bDocumentAvail)
+                SwitchToState(SM_INVALID);
+        UnmapRom();
+        BYTE cCurrentRomTypeBackup = cCurrentRomType;
+        cCurrentRomType = 'Q'; // Fake the model to allow to load the ROM in RW!
+        BOOL result = MapRom(filenameUTF8);
+        cCurrentRomType = cCurrentRomTypeBackup;
+        if(result) {
+                UpdatePatches(TRUE);                    // Apply the patch again if needed (not tested!)
+                if (!CrcRom(&wRomCrc))				    // build patched ROM fingerprint and check for unpacked data
+                        result = FALSE;
+                if (result && bDocumentAvail) {
+                        if (Chipset.wRomCrc != wRomCrc)     // ROM changed
+                        {
+                                CpuReset();
+                                Chipset.Shutdn = FALSE;         // automatic restart
 
-				Chipset.wRomCrc = wRomCrc;      // update current ROM fingerprint
-			}
-			if (pbyRom)
-				SwitchToState(SM_RUN);          // continue emulation
-		}
-	}
-	// If failed to load,
-	// either it is when opening a new document, so it will fall back to the default Flash ROM of the KML script,
-	// or it is when loading a Flash ROM, so we have to manually load the default Flash ROM by resetting (loading the same KML script (OnViewScript))
-	// or it is when saving the Flash ROM, so we have to manually load the default Flash ROM by resetting (loading the same KML script (OnViewScript))
-	(*env)->ReleaseStringUTFChars(env, filename, filenameUTF8);
-	return result ? JNI_TRUE : JNI_FALSE;
+                                Chipset.wRomCrc = wRomCrc;      // update current ROM fingerprint
+                        }
+                        if (pbyRom)
+                                SwitchToState(SM_RUN);          // continue emulation
+                }
+        }
+        // If failed to load,
+        // either it is when opening a new document, so it will fall back to the default Flash ROM of the KML script,
+        // or it is when loading a Flash ROM, so we have to manually load the default Flash ROM by resetting (loading the same KML script (OnViewScript))
+        // or it is when saving the Flash ROM, so we have to manually load the default Flash ROM by resetting (loading the same KML script (OnViewScript))
+        (*env)->ReleaseStringUTFChars(env, filename, filenameUTF8);
+        return result ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setConfiguration(JNIEnv *env, jobject thisz, jstring key, jint isDynamic, jint intValue1, jint intValue2, jstring stringValue) {
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_setConfiguration(JNIEnv *env, jobject thisz, jstring key, jint isDynamic, jint intValue1, jint intValue2, jstring stringValue) {
     const char *configKey = (*env)->GetStringUTFChars(env, key, NULL) ;
     const char *configStringValue = stringValue ? (*env)->GetStringUTFChars(env, stringValue, NULL) : NULL;
 
-	//LOGE("NativeLib_setConfiguration(%s, %d, %d, %s)", configKey, intValue1, intValue2, configStringValue);
+        //LOGE("NativeLib_setConfiguration(%s, %d, %d, %s)", configKey, intValue1, intValue2, configStringValue);
 
-	bAutoSave = FALSE;
+        bAutoSave = FALSE;
     bAutoSaveOnExit = FALSE;
     bLoadObjectWarning = FALSE;
     bAlwaysDisplayLog = TRUE;
@@ -1214,9 +1214,9 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setConfiguration(J
         if (Chipset.Port1Size && (cCurrentRomType!='X' || cCurrentRomType!='2' || cCurrentRomType!='Q'))   // CdB for HP: add apples
         {
             UINT nOldState = SwitchToState(SM_SLEEP);
-	        //LOGE("NativeLib_setConfiguration port1 start SwitchToState %d -> SM_SLEEP", nOldState);
+                //LOGE("NativeLib_setConfiguration port1 start SwitchToState %d -> SM_SLEEP", nOldState);
 
-	        // save old card status
+                // save old card status
             BYTE byCardsStatus = Chipset.cards_status;
 
             // port1 disabled?
@@ -1238,9 +1238,9 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setConfiguration(J
                 Chipset.SoftInt = TRUE;	// set interrupt
                 bInterrupt = TRUE;
             }
-	        //LOGE("NativeLib_setConfiguration port1 end SwitchToState %d", nOldState);
+                //LOGE("NativeLib_setConfiguration port1 end SwitchToState %d", nOldState);
             SwitchToState(nOldState);
-	        while (nState!=nNextState) Sleep(0);
+                while (nState!=nNextState) Sleep(0);
         }
     } else if(_tcscmp(_T("settings_port2"), configKey) == 0) {
         settingsPort2en = (BOOL)intValue1;
@@ -1276,7 +1276,7 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setConfiguration(J
         if (bPort2CfgChange)			// slot2 configuration changed
         {
             UINT nOldState = SwitchToState(SM_INVALID);
-	        //LOGE("NativeLib_setConfiguration port2 start SwitchToState %d -> SM_INVALID", nOldState);
+                //LOGE("NativeLib_setConfiguration port2 start SwitchToState %d -> SM_INVALID", nOldState);
 
             UnmapPort2();				// unmap port2
 
@@ -1297,27 +1297,27 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setConfiguration(J
                 // save fingerprint of port2
                 Chipset.wPort2Crc = wPort2Crc;
             }
-	        //LOGE("NativeLib_setConfiguration port2 end SwitchToState %d", nOldState);
+                //LOGE("NativeLib_setConfiguration port2 end SwitchToState %d", nOldState);
             SwitchToState(nOldState);
         }
     } else if(_tcscmp(_T("settings_serial_ports_wire"), configKey) == 0) {
-	    const char * newSerialWire = _tcscmp(_T("0000:0000,0"), configStringValue) == 0 ? NO_SERIAL : configStringValue;
-	    BOOL serialWireChanged = _tcscmp(szSerialWire, newSerialWire) != 0;
-	    _tcsncpy(szSerialWire, newSerialWire, sizeof(szSerialWire));
-	    if(CommIsOpen() && serialWireChanged) {
-	    	// Not the right thread, but it seems to work.
-		    CommOpen(szSerialWire, szSerialIr);
-	    }
+            const char * newSerialWire = _tcscmp(_T("0000:0000,0"), configStringValue) == 0 ? NO_SERIAL : configStringValue;
+            BOOL serialWireChanged = _tcscmp(szSerialWire, newSerialWire) != 0;
+            _tcsncpy(szSerialWire, newSerialWire, sizeof(szSerialWire));
+            if(CommIsOpen() && serialWireChanged) {
+                // Not the right thread, but it seems to work.
+                    CommOpen(szSerialWire, szSerialIr);
+            }
     } else if(_tcscmp(_T("settings_serial_ports_ir"), configKey) == 0) {
-	    const char * newSerialIr = _tcscmp(_T("0000:0000,0"), configStringValue) == 0 ? NO_SERIAL : configStringValue;
-	    BOOL serialIrChanged = _tcscmp(szSerialIr, newSerialIr) != 0;
-	    _tcsncpy(szSerialIr, newSerialIr, sizeof(szSerialIr));
-	    if(CommIsOpen() && serialIrChanged) {
-		    // Not the right thread, but it seems to work.
-		    CommOpen(szSerialWire, szSerialIr);
-	    }
+            const char * newSerialIr = _tcscmp(_T("0000:0000,0"), configStringValue) == 0 ? NO_SERIAL : configStringValue;
+            BOOL serialIrChanged = _tcscmp(szSerialIr, newSerialIr) != 0;
+            _tcsncpy(szSerialIr, newSerialIr, sizeof(szSerialIr));
+            if(CommIsOpen() && serialIrChanged) {
+                    // Not the right thread, but it seems to work.
+                    CommOpen(szSerialWire, szSerialIr);
+            }
     } else if(_tcscmp(_T("settings_serial_slowdown"), configKey) == 0) {
-	    serialPortSlowDown = (BOOL)intValue1;
+            serialPortSlowDown = (BOOL)intValue1;
     }
 
     if(configKey)
@@ -1326,41 +1326,41 @@ JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_setConfiguration(J
         (*env)->ReleaseStringUTFChars(env, stringValue, configStringValue);
 }
 
-JNIEXPORT jboolean JNICALL Java_org_emulator_calculator_NativeLib_isPortExtensionPossible(JNIEnv *env, jobject thisz) {
+JNIEXPORT jboolean JNICALL Java_eu_luoi_calculator_NativeLib_isPortExtensionPossible(JNIEnv *env, jobject thisz) {
     return (uint8_t)(cCurrentRomType=='S' || cCurrentRomType=='G' || cCurrentRomType==0 ? JNI_TRUE : JNI_FALSE);
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getState(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getState(JNIEnv *env, jobject thisz) {
     return nState;
 }
 
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getScreenPositionX(JNIEnv *env, jobject thisz) {
-	return nLcdX - nBackgroundX;
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getScreenPositionX(JNIEnv *env, jobject thisz) {
+        return nLcdX - nBackgroundX;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getScreenPositionY(JNIEnv *env, jobject thisz) {
-	return nLcdY - nBackgroundY;
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getScreenPositionY(JNIEnv *env, jobject thisz) {
+        return nLcdY - nBackgroundY;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getScreenWidth(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getScreenWidth(JNIEnv *env, jobject thisz) {
     return 131*nLcdZoom*nGdiXZoom;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getScreenHeight(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getScreenHeight(JNIEnv *env, jobject thisz) {
     return SCREENHEIGHT*nLcdZoom*nGdiYZoom;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getScreenWidthNative(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getScreenWidthNative(JNIEnv *env, jobject thisz) {
     return 131;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getScreenHeightNative(JNIEnv *env, jobject thisz) {
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getScreenHeightNative(JNIEnv *env, jobject thisz) {
     return SCREENHEIGHT;
 }
-JNIEXPORT jint JNICALL Java_org_emulator_calculator_NativeLib_getLCDBackgroundColor(JNIEnv *env, jobject thisz) {
-	if (hLcdDC && hLcdDC->realizedPalette && hLcdDC->realizedPalette->paletteLog &&
-	    hLcdDC->realizedPalette->paletteLog->palPalEntry) {
-		PALETTEENTRY *palPalEntry = hLcdDC->realizedPalette->paletteLog->palPalEntry;
-		return palPalEntry[0].peRed << 16 | palPalEntry[0].peGreen << 8 | palPalEntry[0].peBlue;
-	}
-	return -1;
+JNIEXPORT jint JNICALL Java_eu_luoi_calculator_NativeLib_getLCDBackgroundColor(JNIEnv *env, jobject thisz) {
+        if (hLcdDC && hLcdDC->realizedPalette && hLcdDC->realizedPalette->paletteLog &&
+            hLcdDC->realizedPalette->paletteLog->palPalEntry) {
+                PALETTEENTRY *palPalEntry = hLcdDC->realizedPalette->paletteLog->palPalEntry;
+                return palPalEntry[0].peRed << 16 | palPalEntry[0].peGreen << 8 | palPalEntry[0].peBlue;
+        }
+        return -1;
 }
 
-JNIEXPORT void JNICALL Java_org_emulator_calculator_NativeLib_commEvent(JNIEnv *env, jclass clazz, jint commId, jint eventMask) {
-	commEvent(commId, eventMask);
+JNIEXPORT void JNICALL Java_eu_luoi_calculator_NativeLib_commEvent(JNIEnv *env, jclass clazz, jint commId, jint eventMask) {
+        commEvent(commId, eventMask);
 }
