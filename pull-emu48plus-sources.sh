@@ -2,6 +2,8 @@
 
 set -eu
 
+cd "$(dirname "$0")" || exit 1
+
 cd ./app/src/main/cpp/ || exit 1
 
 [ -d ./emu48plus.bkp ] && rm -fr ./emu48plus.bkp
@@ -28,5 +30,4 @@ sed -i 's|Emu48Dll\.h|emu48dll.h|g' ./*
 sed -i 's|Opcodes\.h|opcodes.h|g' ./*
 sed -i 's|Ops\.h|ops.h|g' ./*
 
-#cd ../ || exit 1
 clang-format -i ./*.c ./*.h

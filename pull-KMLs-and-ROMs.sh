@@ -2,6 +2,8 @@
 
 set -eu
 
+cd "$(dirname "$0")" || exit 1
+
 cd ./app/src/main/assets/ || exit 1
 
 [ -d ./calculators.bkp ] && rm -fr ./calculators.bkp
