@@ -3,4 +3,4 @@
 
 #include "../win32-layer.h"
 
-#endif //TRUNK_WINDOWS_H
+#endif // TRUNK_WINDOWS_H

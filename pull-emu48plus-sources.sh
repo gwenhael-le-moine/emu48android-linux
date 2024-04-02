@@ -15,10 +15,16 @@ rm e48sp65plus.zip source.zip
 
 echo "Correct filenames' case"
 cd emu48plus || exit 1
-for i in $(fd -e h -e c -e H -e C); do
-    mv "$i" "$(echo "$i" | tr '[:upper:]' '[:lower:]')";
+# sed -i 's/'$(echo "\0337")'/ss/g' ./*
+for f in ./*; do
+    dos2unix "$f"
+
+    echo "$f" | grep -q "[A-Z]" && mv "$f" "$(echo "$f" | tr '[:upper:]' '[:lower:]')"
 done
-sed -i 's|Emu48\.h|emu48.h|g' ./*.c ./*.h
-sed -i 's|Emu48Dll\.h|emu48dll.h|g' ./*.c ./*.h
-sed -i 's|Opcodes\.h|opcodes.h|g' ./*.c ./*.h
-sed -i 's|Ops\.h|ops.h|g' ./*.c ./*.h
+sed -i 's|Emu48\.h|emu48.h|g' ./*
+sed -i 's|Emu48Dll\.h|emu48dll.h|g' ./*
+sed -i 's|Opcodes\.h|opcodes.h|g' ./*
+sed -i 's|Ops\.h|ops.h|g' ./*
+
+#cd ../ || exit 1
+clang-format -i ./*.c ./*.h
