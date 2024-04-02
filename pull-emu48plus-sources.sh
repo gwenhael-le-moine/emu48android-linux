@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 set -eu
 
@@ -15,7 +15,9 @@ rm e48sp65plus.zip source.zip
 
 echo "Correct filenames' case"
 cd emu48plus || exit 1
-# sed -i 's/'$(echo "\0337")'/ss/g' ./*
+
+sed -i 's/'$(echo "\0337")'/ss/g' ./*
+
 for f in ./*; do
     dos2unix "$f"
 
