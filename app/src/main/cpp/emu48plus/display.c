@@ -4,7 +4,7 @@
  *   This file is part of Emu48
  *
  *   Copyright (C) 1995 Sebastien Carlier
- *   Copyright (C) 2002 Christoph Gieﬂelink
+ *   Copyright (C) 2002 Christoph Giesselink
  *
  */
 #include "pch.h"
