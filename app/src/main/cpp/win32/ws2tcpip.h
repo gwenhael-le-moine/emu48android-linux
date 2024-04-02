@@ -12,9 +12,9 @@
 #include <netinet/in6.h>
 
 typedef struct sockaddr_in6 SOCKADDR_IN6_LH;
-typedef SOCKADDR_IN6_LH *PSOCKADDR_IN6;
-typedef struct in6_addr *PIN6_ADDR;
+typedef SOCKADDR_IN6_LH* PSOCKADDR_IN6;
+typedef struct in6_addr* PIN6_ADDR;
 
 #define closesocket close
 
-#endif //TRUNK_WS2TCPIP_H
+#endif // TRUNK_WS2TCPIP_H
