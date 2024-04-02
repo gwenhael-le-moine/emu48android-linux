@@ -18,10 +18,10 @@
 #include <android/asset_manager_jni.h>
 #include <android/bitmap.h>
 
-#include "core/pch.h"
+#include "emu48plus/pch.h"
 #include "emu.h"
-#include "core/io.h"
-#include "core/kml.h"
+#include "emu48plus/io.h"
+#include "emu48plus/kml.h"
 #include "win32-layer.h"
 
 extern AAssetManager * assetManager;

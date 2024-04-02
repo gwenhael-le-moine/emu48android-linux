@@ -1,0 +1,332 @@
+Service Pack 64+ based on Emu48 Service Pack 65
+
+See CHANGES.TXT in Emu48 for full history.
+Only changes specifically made to Emu48+ are shown below.
+
+Service Pack 62+ for Emu48 Version 1.0
+
+APPLE.C
+APPLE.H
+- Moved BEEP2 and RCKBp here to match other Apple opcodes
+
+Service Pack 60+ for Emu48 Version 1.0
+
+DISPLAY.C
+- bugfix in function WriteToMainDisplay() to fix display corruption
+
+Service Pack 55+ for Emu48 Version 1.0
+
+DEBUGDLL.C
+- bugfix in function EmuInitLastInstr(), use critical section for
+  secure deletion of the last instruction buffer
+
+Service Pack 54+ for Emu48 Version 1.0
+
+EMU48DLL.C
+- changed function DLLCreateWnd(), added sound engine initialization
+- changed function DLLDestroyWnd(), added sound engine clean up
+
+Service Pack 53+ for Emu48 Version 1.0
+
+APPLE.C
+- added functions WrDirtyPage() and EraseBlock() for access to the
+  ROM buffer
+- changed function o80B14() and o80B24(), changed implementation
+  using the new ROM buffer access functions
+
+EMU48DLL.C
+- replaced global variable ThreadId with local variable dwThreadId
+
+Service Pack 52+ for Emu48 Version 1.0
+
+EMU48DLL.C
+- added function DllMain(), implemented "CEmu48" window class
+  registration and unregistration in process attach and detach
+  especially for dynamic DLL load with LoadLibrary() and
+  FreeLibrary()
+- bugfix in function DLLCreateWnd(), moved "CEmu48" window class
+  registration to DllMain(), so it's now possible to unregister
+  the window class automatically at DLL detach
+
+MOPS.C
+- bugfix in function WriteIO(), removed implementation of the ELBE
+  bit in the LCR (0x11C) register for apples; the Saturnator has no
+  ELBE bit simulation so the LSRQ bit in SRQ2 register is untouched
+
+Service Pack 51+ for Emu48 Version 1.0
+
+EMU48DLL.C
+- bugfix in function DLLCreateWnd(), when starting an emulator
+  session the function was trying to register the window class, but
+  with introducíng the ATOM variable the system tells that only the
+  first registration for the process was successful and so on any
+  other further registration the content of the ATOM variable
+  pointing to window class got lost
+
+Service Pack 50+ for Emu48 Version 1.0
+
+APPLE.C
+- added BUSCC 56 (opcode 80B65) implementation
+
+EMU48DLL.C
+- changed function DLLCreateWnd(), replaced multiple class name
+  usage with atom variable and moved read settings before window
+  creation
+
+Service Pack 49+ for Emu48 Version 1.0
+
+EMU48.H
+- added definitions to detect Apple platform
+
+MOPS.C
+- changed function ReadIO() and WriteIO(), on Apple hardware the
+  BAUD (0x10D) register use 4 bits for baud rate setting, the UCK
+  bit isn't supported on this platform
+
+SERIAL.C
+- changed function CommSetBaud(), expanded dwBaudrates[] table and
+  enabled the access to these baud rates on the Apple platform
+
+Service Pack 46+ for Emu48 Version 1.0
+
+APPLE.C
+- added BUSCC 09 (opcode 80B90) data streamer implementation as NOP
+
+DEBUGDLL.C
+- added dummy functions CreateBackupBreakpointList() and
+  RestoreBackupBreakpointList() for linking
+
+EMU48DLL.C
+- bugfix in function DLLDestroyWnd(), getting the full path name of
+  the current state file failed in the case of an empty name buffer
+
+Service Pack 44+ for Emu48 Version 1.0
+
+APPLE.C
+- changed function o80BReg164(), o80BReg264() and o80BRegWrite(),
+  optimization by throwing out case switch
+- added BUSCC 00 (opcode 80B00) implementation
+- added BUSCC 03 (opcode 80B30) implementation
+- added BUSCC 04 (opcode 80B40) implementation
+- added BUSCC 06 (opcode 80B60) implementation
+- added BUSCC 07 (opcode 80B70) implementation
+- added BUSCC 08 (opcode 80B80) implementation
+- added BUSCC 09 (opcode 80B90) implementation
+- added BUSCC 7F (opcode 80BF7) implementation but not called so far
+- bugfix in function o80BExt(), RCKBp has opcode BUSCC 09 (opcode
+  80B90) and not BUSCC 90 and changed BUSCC 7F (opcode 80BF7)
+  setting carry flag to tell that SETFLDn failed (SETFLDn not
+  implemented so far)
+
+EMU48DLL.C
+- changed in function DLLDestroyWnd(), added last document saving
+
+EMU48.H
+- changed function RPL_CreateTemp()
+
+FILES.C
+- changed function PatchRom() and MapRom(), if szRomDirectory
+  contain data, the data is used as path to the ROM image else the
+  ROM image in the standard szRomDirectory is used
+- changed function WriteStack(), adjusted to new prototype of
+  function RPL_CreateTemp()
+
+OPCODES.C
+- bugfix in function o81B1(), on ARM-based calculators return to RPL
+  preserve Carry flag
+
+RPL.C
+- changed function RPL_CreateTemp(), added garbage collection
+  argument to disable automatic garbage collection
+
+TYPES.H
+- added structure APPLE_CHIPSET containing Apple specific data
+
+Service Pack 43+ for Emu48 Version 1.0
+
+EMU48DLL.C
+- changed function DLLCreateWnd(), added StartupBackup handling
+
+Service Pack 42+ for Emu48 Version 1.0
+
+EMU48DLL.C
+- bugfix in function DLLCreateWnd(), moved additional DDE stuff just
+  behind DDE server initialization, adjusted length for cutted
+  filenames preventing negative values and call ShowWindow() before
+  asking for a new document preventing a KML script dialog without a
+  parent window
+- changed function SetWindowPathTitle(), adjusted length for cutted
+  filename
+- changed function CrcPort2(), change function prototype, added
+  unpacked data check and made it global accessible
+- changed function UnmapPort2(), added reset of Port 2 CRC variable
+
+Service Pack 41+ for Emu48 Version 1.0
+
+EMU48DLL.C
+- added DDE server
+
+Service Pack 40+ for Emu48 Version 1.0
+
+APPLE.C
+APPLE.H
+- new module containing Saturnator BUSCC extentions and helper
+  functions prior located in opcodes.c
+- changed BUSCC 2E (opcode 80BE2) implementation, return Carry = 1
+  for big apple V2 when "Class 50" KML command is set
+- added BUSCC 40 (opcode 80B04) implementation
+- added BUSCC 42 (opcode 80B24) implementation
+
+EMU48.DSP
+- added apple.c and apple.h sources
+
+EMU48DLL.C
+- changed function DLLCreateWnd(), simplified document loading at
+  startup and replaced full filename title with length cutted
+  filename
+
+EMU48DLL.DSP
+- added apple.c and apple.h sources
+
+OPCODES.C
+- moved function DecodeReg64(), o80BReg164(), o80BReg264(),
+  EncodeReg64() and o80BRegWrite() to apple.c
+- changed function o80B(), moved Saturnator extentions to apple.c
+
+Service Pack 39+ for Emu48 Version 1.0
+
+EMU48.DSP
+- added new build modes using Debug4x registry settings of Emu48.dll
+
+Service Pack 38+ for Emu48 Version 1.0
+
+EMU48DLL.C
+- changed function DLLCreateWnd(), added accelerator table resource
+  loading
+- added function EmuAcceleratorTable() for exporting the necessary
+  data to activate the emulator accelerator table in the main
+  message loop of the caller
+
+EMU48DLL.DSP
+- added stack.c sources
+
+EMU48DLL.H
+- extern declaration of global function
+
+FILES.C
+- bugfix in function SaveObject(), calculator models HP48gII and
+  HP49g+ hasn't used the HP49G object header
+
+OPCODES.C
+- bugfix in function o80BdecodeReg64(), WP and XS case worked wrong
+- replaced function o80BdecodeReg64() with DecodeReg64()
+- changed function o80BReg164() and o80BReg264(), adjusted to
+  DecodeReg64() call
+- deleted function o80BWriteHex()
+- replaced complete buggy function o80BEncodeReg64() with
+  EncodeReg64()
+- changed function o80BRegWrite(), adjusted to EncodeReg64() call
+- bugfix in function o80B(), case 85 of BUSCC extensions used '/'
+  instead of '%' operator
+- added simulation of off switch for 49g+ family
+
+OPS.H
+- added function Npack64() and Nunpack64() for 64bit register
+  packing/unpacking
+
+Service Pack 37+ for Emu48 Version 1.0
+
+EMU48.H
+- bugfix in definition MENUHEIGHT, calculated number of lines was
+  always 1 to much (with the exception of Chipset.lcounter==0);
+  this caused a buffer overflow in function UpdateMenuDisplay()
+  which prevented program execution on Win9x
+
+EMU48DLL.C
+- changed function EmuCalculatorType(), removed workaround for older
+  Debug4x versions
+
+Service Pack 36+ for Emu48 Version 1.0
+
+DISPLAY.C
+- changed display management to use stretchBlt instead of doing it
+  by hand
+- debugged usage of Apple header display to allow one to change the
+  header size to any size
+
+EMU48.H
+- replaced T2CYCLES with the one from OPCODES.H
+
+EMU48DLL.DSP
+- added keymacro.c sources
+
+Service Pack 35+ for Emu48 Version 1.0
+
+DEBUGDLL.C
+EMU48DLL.C
+EMU48DLL.DSP
+EMU48DLL.DSW
+EMU48DLL.H
+- new files
+
+DDESERV.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+
+DEBUGGER.C
+- added extra speed for Apple series
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+
+DISMEM.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+
+DISPLAY.C
+- added 80 line display and header support
+
+EMU48.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+- added 80 line display and header support
+- changed version number
+
+EMU48.DSP
+- added new files
+
+EMU48.H
+- added extra speed for Apple series
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+- adjusted to new prototype of function RPL_CreateTemp()
+- changed signature of FlashROMAddr
+
+ENGINE.C
+- added extra speed for Apple series
+- added 80 line display and header support
+
+EXTERNAL.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+
+FILES.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+
+KML.C
+- added new calculator type: P for 39g+
+
+MOPS.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+- added 80 line display and header support
+- changed signature of FlashROMAddr
+
+OPCODES.C
+- added BUSCC function support
+
+RPL.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+
+SETTINGS.C
+- added extra speed for Apple series
+- added RomDirectory
+
+STACK.C
+- added new calculator type: P, 2 and Q for 39g+, 48gII and 49g+.
+- adjusted to new prototype of function RPL_CreateTemp()
+
+TYPES.H
+- added support for Apple hardware

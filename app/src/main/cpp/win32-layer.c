@@ -12,7 +12,7 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-#include "core/pch.h"
+#include "emu48plus/pch.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
@@ -21,10 +21,10 @@
 #include <semaphore.h>
 #include <android/bitmap.h>
 #include <sys/socket.h>
-#include "core/resource.h"
+#include "emu48plus/resource.h"
 #include "win32-layer.h"
 #include "emu.h"
-#include "core/lodepng.h"
+#include "emu48plus/lodepng.h"
 
 
 extern JavaVM *java_machine;
@@ -70,10 +70,10 @@ void win32Init() {
 
     assetsPrefixLength = _tcslen(assetsPrefix);
     contentSchemeLength = _tcslen(contentScheme);
-	documentSchemeLength = _tcslen(documentScheme);
-	comPrefixLength = _tcslen(comPrefix);
+        documentSchemeLength = _tcslen(documentScheme);
+        comPrefixLength = _tcslen(comPrefix);
 
-	rootBITMAP = CreateCompatibleBitmap(NULL, 0, 0);
+        rootBITMAP = CreateCompatibleBitmap(NULL, 0, 0);
 }
 
 int abs (int i) {
@@ -93,7 +93,7 @@ DWORD GetCurrentDirectory(DWORD nBufferLength, LPTSTR lpBuffer) {
 }
 
 BOOL SetCurrentDirectory(LPCTSTR path) {
-	// Set the current directory for the next calls to CreateFile() API with a relative path.
+        // Set the current directory for the next calls to CreateFile() API with a relative path.
 
     szCurrentContentDirectory = NULL;
     szCurrentAssetDirectory = NULL;
@@ -102,15 +102,15 @@ BOOL SetCurrentDirectory(LPCTSTR path) {
         return FALSE;
 
     if(_tcsncmp(path, contentScheme, contentSchemeLength) == 0) {
-    	// Set the current directory with an URL with the scheme "content://".
+        // Set the current directory with an URL with the scheme "content://".
         szCurrentContentDirectory = (LPTSTR) path;
         return TRUE;
     } else if(_tcsncmp(path, assetsPrefix, assetsPrefixLength) == 0) {
-	    // Set the current directory with a path to target the Android asset folders (embedded in the app).
+            // Set the current directory with a path to target the Android asset folders (embedded in the app).
         szCurrentAssetDirectory = (LPTSTR) (path + assetsPrefixLength * sizeof(TCHAR));
         return TRUE;
     } else
-	    // Set the current directory using the file system "chdir" API. Deprecated, not supported by Android >= 10.
+            // Set the current directory using the file system "chdir" API. Deprecated, not supported by Android >= 10.
         return (BOOL) chdir(path);
 }
 
@@ -125,35 +125,35 @@ static pthread_mutex_t commsLock;
 HANDLE CreateFile(LPCTSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPVOID lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, LPVOID hTemplateFile) {
     FILE_LOGD("CreateFile(lpFileName: \"%s\", dwDesiredAccess: 0x%08x)", lpFileName, dwShareMode);
 
-	BOOL foundCOMPrefix = _tcsncmp(lpFileName, comPrefix, comPrefixLength) == 0;
-	if(foundCOMPrefix) {
+        BOOL foundCOMPrefix = _tcsncmp(lpFileName, comPrefix, comPrefixLength) == 0;
+        if(foundCOMPrefix) {
 
-		int serialPortId = openSerialPort(lpFileName);
-		if(serialPortId > 0) {
-			// We try to open a COM/Serial port
-			HANDLE handle = malloc(sizeof(struct _HANDLE));
-			memset(handle, 0, sizeof(struct _HANDLE));
-			handle->handleType = HANDLE_TYPE_COM;
-			handle->commEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-			handle->commId = serialPortId;
+                int serialPortId = openSerialPort(lpFileName);
+                if(serialPortId > 0) {
+                        // We try to open a COM/Serial port
+                        HANDLE handle = malloc(sizeof(struct _HANDLE));
+                        memset(handle, 0, sizeof(struct _HANDLE));
+                        handle->handleType = HANDLE_TYPE_COM;
+                        handle->commEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+                        handle->commId = serialPortId;
 
-			pthread_mutex_lock(&commsLock);
-			handle->commIndex = -1;
-			for(int i = 0; i < MAX_CREATED_COMM; i++) {
-				if(comms[i] == NULL) {
-					handle->commIndex = i;
-					comms[handle->commIndex] = handle;
-					break;
-				}
-			}
-			pthread_mutex_unlock(&commsLock);
+                        pthread_mutex_lock(&commsLock);
+                        handle->commIndex = -1;
+                        for(int i = 0; i < MAX_CREATED_COMM; i++) {
+                                if(comms[i] == NULL) {
+                                        handle->commIndex = i;
+                                        comms[handle->commIndex] = handle;
+                                        break;
+                                }
+                        }
+                        pthread_mutex_unlock(&commsLock);
 
-			SERIAL_LOGD("CreateFile(lpFileName: \"%s\", ...) commId: %d, commIndex: %d", lpFileName, handle->commId, handle->commIndex);
+                        SERIAL_LOGD("CreateFile(lpFileName: \"%s\", ...) commId: %d, commIndex: %d", lpFileName, handle->commId, handle->commIndex);
 
-			return handle;
-		} else
-			return (HANDLE) INVALID_HANDLE_VALUE;
-	}
+                        return handle;
+                } else
+                        return (HANDLE) INVALID_HANDLE_VALUE;
+        }
 
     BOOL forceNormalFile = FALSE;
     securityExceptionOccured = FALSE;
@@ -166,35 +166,35 @@ HANDLE CreateFile(LPCTSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, 
     }
 #endif
 
-	BOOL foundDocumentScheme = _tcsncmp(lpFileName, documentScheme, documentSchemeLength) == 0;
-	BOOL urlContentSchemeFound = _tcsncmp(lpFileName, contentScheme, contentSchemeLength) == 0;
+        BOOL foundDocumentScheme = _tcsncmp(lpFileName, documentScheme, documentSchemeLength) == 0;
+        BOOL urlContentSchemeFound = _tcsncmp(lpFileName, contentScheme, contentSchemeLength) == 0;
 
-	if(chooseCurrentKmlMode == ChooseKmlMode_FILE_OPEN || chooseCurrentKmlMode == ChooseKmlMode_FILE_OPEN_WITH_FOLDER) {
+        if(chooseCurrentKmlMode == ChooseKmlMode_FILE_OPEN || chooseCurrentKmlMode == ChooseKmlMode_FILE_OPEN_WITH_FOLDER) {
         // A E48 state file can contain a path to the KML script.
-	    if(foundDocumentScheme) {
-	    	// Keep for compatibility:
-		    // When the state file is created or saved with this Android version,
-		    // an URL like: document:content://<KMLFolderURL>|content://<KMLFileURL>
-		    // is created and saved in the state file.
-	    	// Here we want to open a file (lpFileName) which contains the prefix "document:"
-	    	// So, we are loading a KML script.
-		    // We extract the KML File URL with "content://" scheme (in the variable "filename"),
-		    // and we extract the folder URL with "content://" scheme (in the variable "szEmuDirectory"/"szRomDirectory" and "szCurrentContentDirectory")
-		    // which should contain the script and its dependencies like the includes, the images and the ROMs.
-		    _tcscpy(szFilePathTmp, lpFileName + _tcslen(documentScheme) * sizeof(TCHAR));
-		    TCHAR * filename = _tcschr(szFilePathTmp, _T('|'));
-		    if(filename)
-			    *filename = _T('\0');
-		    if(szFilePathTmp[0]) {
-		    	// If szFilePathTmp is empty, this mean that the variable "szEmuDirectory", "szRomDirectory"
-		    	// and "szCurrentContentDirectory" are set before that method, using the JSON settings embedded in the state file.
-			    _tcscpy(szEmuDirectory, szFilePathTmp);
+            if(foundDocumentScheme) {
+                // Keep for compatibility:
+                    // When the state file is created or saved with this Android version,
+                    // an URL like: document:content://<KMLFolderURL>|content://<KMLFileURL>
+                    // is created and saved in the state file.
+                // Here we want to open a file (lpFileName) which contains the prefix "document:"
+                // So, we are loading a KML script.
+                    // We extract the KML File URL with "content://" scheme (in the variable "filename"),
+                    // and we extract the folder URL with "content://" scheme (in the variable "szEmuDirectory"/"szRomDirectory" and "szCurrentContentDirectory")
+                    // which should contain the script and its dependencies like the includes, the images and the ROMs.
+                    _tcscpy(szFilePathTmp, lpFileName + _tcslen(documentScheme) * sizeof(TCHAR));
+                    TCHAR * filename = _tcschr(szFilePathTmp, _T('|'));
+                    if(filename)
+                            *filename = _T('\0');
+                    if(szFilePathTmp[0]) {
+                        // If szFilePathTmp is empty, this mean that the variable "szEmuDirectory", "szRomDirectory"
+                        // and "szCurrentContentDirectory" are set before that method, using the JSON settings embedded in the state file.
+                            _tcscpy(szEmuDirectory, szFilePathTmp);
 #if EMUXX == 48
-			    _tcscpy(szRomDirectory, szFilePathTmp);
+                            _tcscpy(szRomDirectory, szFilePathTmp);
 #endif
-			    SetCurrentDirectory(szFilePathTmp);
-		    }
-	    }
+                            SetCurrentDirectory(szFilePathTmp);
+                    }
+            }
     }
 
     if(!forceNormalFile
@@ -252,7 +252,7 @@ HANDLE CreateFile(LPCTSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, 
             // Case of an absolute file with the scheme "content://".
             fd = openFileFromContentResolver(lpFileName, dwDesiredAccess);
             useOpenFileFromContentResolver = TRUE;
-	        if(fd == -2) {
+                if(fd == -2) {
                 FILE_LOGD("CreateFile() openFileFromContentResolver() %d", errno);
                 securityExceptionOccured = TRUE;
             }
@@ -264,7 +264,7 @@ HANDLE CreateFile(LPCTSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, 
                 FILE_LOGD("CreateFile() openFileFromContentResolver() %d", errno);
             }
         } else {
-	        // Case of an absolute file with the scheme "file://". Deprecated not supported by Android >= 10.
+                // Case of an absolute file with the scheme "file://". Deprecated not supported by Android >= 10.
             TCHAR * urlFileSchemeFound = _tcsstr(lpFileName, _T("file://"));
             if(urlFileSchemeFound)
                 lpFileName = urlFileSchemeFound + 7;
@@ -287,24 +287,24 @@ HANDLE CreateFile(LPCTSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, 
 }
 
 char * dumpToHexAscii(char * buffer, int inputSize, int charWidth) {
-	int numLines = 1 + inputSize / charWidth;
-	char * hexAsciiDump = malloc(4 * inputSize  + 3 * numLines + 10);
-	unsigned char * pBuff = (unsigned char *)buffer;
-	char * pDump = hexAsciiDump;
-	for (int l = 0, n = 0; l < numLines; ++l) {
-		*pDump++ = (char)'\t';
-		for (int c = 0; c < charWidth && n + c < inputSize; ++c) {
-			sprintf((char *const)pDump, "%02X ", pBuff[c]);
-			pDump += 3;
-		}
-		for (int c = 0; c < charWidth && n + c < inputSize; ++c)
-			*pDump++ = isprint(pBuff[c]) ? ((char *)pBuff)[c] : '.';
-		*pDump++ = '\n';
-		pBuff += charWidth;
-		n += charWidth;
-	}
-	*pDump++ = '\0';
-	return hexAsciiDump;
+        int numLines = 1 + inputSize / charWidth;
+        char * hexAsciiDump = malloc(4 * inputSize  + 3 * numLines + 10);
+        unsigned char * pBuff = (unsigned char *)buffer;
+        char * pDump = hexAsciiDump;
+        for (int l = 0, n = 0; l < numLines; ++l) {
+                *pDump++ = (char)'\t';
+                for (int c = 0; c < charWidth && n + c < inputSize; ++c) {
+                        sprintf((char *const)pDump, "%02X ", pBuff[c]);
+                        pDump += 3;
+                }
+                for (int c = 0; c < charWidth && n + c < inputSize; ++c)
+                        *pDump++ = isprint(pBuff[c]) ? ((char *)pBuff)[c] : '.';
+                *pDump++ = '\n';
+                pBuff += charWidth;
+                n += charWidth;
+        }
+        *pDump++ = '\0';
+        return hexAsciiDump;
 }
 
 BOOL ReadFile(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, LPOVERLAPPED lpOverlapped) {
@@ -315,11 +315,11 @@ BOOL ReadFile(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD
     } else if(hFile->handleType == HANDLE_TYPE_FILE_ASSET) {
         readByteCount = (DWORD) AAsset_read(hFile->fileAsset, lpBuffer, nNumberOfBytesToRead);
     } else if(hFile->handleType == HANDLE_TYPE_COM) {
-	    readByteCount = (DWORD) readSerialPort(hFile->commId, lpBuffer, nNumberOfBytesToRead);
+            readByteCount = (DWORD) readSerialPort(hFile->commId, lpBuffer, nNumberOfBytesToRead);
 #if defined DEBUG_ANDROID_SERIAL
-	    char * hexAsciiDump = dumpToHexAscii(lpBuffer, readByteCount, 8);
-	    SERIAL_LOGD("ReadFile(hFile: %p, lpBuffer: 0x%08x, nNumberOfBytesToRead: %d) -> %d bytes\n%s", hFile, lpBuffer, nNumberOfBytesToRead, readByteCount, hexAsciiDump);
-	    free(hexAsciiDump);
+            char * hexAsciiDump = dumpToHexAscii(lpBuffer, readByteCount, 8);
+            SERIAL_LOGD("ReadFile(hFile: %p, lpBuffer: 0x%08x, nNumberOfBytesToRead: %d) -> %d bytes\n%s", hFile, lpBuffer, nNumberOfBytesToRead, readByteCount, hexAsciiDump);
+            free(hexAsciiDump);
 #endif
     }
     if(lpNumberOfBytesRead)
@@ -329,25 +329,25 @@ BOOL ReadFile(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD
 
 BOOL WriteFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite,LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped) {
     FILE_LOGD("WriteFile(hFile: %p, lpBuffer: 0x%08x, nNumberOfBytesToWrite: %d)", hFile, lpBuffer, nNumberOfBytesToWrite);
-	if(hFile->handleType == HANDLE_TYPE_FILE) {
-		ssize_t writenByteCount = write(hFile->fileDescriptor, lpBuffer, nNumberOfBytesToWrite);
-		if(lpNumberOfBytesWritten)
-			*lpNumberOfBytesWritten = (DWORD) writenByteCount;
-		return writenByteCount >= 0;
-	} else if(hFile->handleType == HANDLE_TYPE_COM) {
-		ssize_t writenByteCount = writeSerialPort(hFile->commId, lpBuffer, nNumberOfBytesToWrite);
+        if(hFile->handleType == HANDLE_TYPE_FILE) {
+                ssize_t writenByteCount = write(hFile->fileDescriptor, lpBuffer, nNumberOfBytesToWrite);
+                if(lpNumberOfBytesWritten)
+                        *lpNumberOfBytesWritten = (DWORD) writenByteCount;
+                return writenByteCount >= 0;
+        } else if(hFile->handleType == HANDLE_TYPE_COM) {
+                ssize_t writenByteCount = writeSerialPort(hFile->commId, lpBuffer, nNumberOfBytesToWrite);
 #if defined DEBUG_ANDROID_SERIAL
-		char * hexAsciiDump = dumpToHexAscii(lpBuffer, writenByteCount, 8);
-		SERIAL_LOGD("WriteFile(hFile: %p, lpBuffer: 0x%08x, nNumberOfBytesToWrite: %d) -> %d bytes\n%s", hFile, lpBuffer, nNumberOfBytesToWrite, writenByteCount, hexAsciiDump);
-		free(hexAsciiDump);
+                char * hexAsciiDump = dumpToHexAscii(lpBuffer, writenByteCount, 8);
+                SERIAL_LOGD("WriteFile(hFile: %p, lpBuffer: 0x%08x, nNumberOfBytesToWrite: %d) -> %d bytes\n%s", hFile, lpBuffer, nNumberOfBytesToWrite, writenByteCount, hexAsciiDump);
+                free(hexAsciiDump);
 #endif
-		if(serialPortSlowDown)
-			Sleep(4); // Seems to be needed else the kermit packet does not fully reach the genuine calculator.
-		if(lpNumberOfBytesWritten)
-			*lpNumberOfBytesWritten = (DWORD) writenByteCount;
-		return writenByteCount >= 0;
-	}
-	return FALSE;
+                if(serialPortSlowDown)
+                        Sleep(4); // Seems to be needed else the kermit packet does not fully reach the genuine calculator.
+                if(lpNumberOfBytesWritten)
+                        *lpNumberOfBytesWritten = (DWORD) writenByteCount;
+                return writenByteCount >= 0;
+        }
+        return FALSE;
 }
 
 DWORD SetFilePointer(HANDLE hFile, LONG lDistanceToMove, PLONG lpDistanceToMoveHigh, DWORD dwMoveMethod) {
@@ -754,7 +754,7 @@ DWORD WaitForSingleObject(HANDLE hHandle, DWORD dwMilliseconds)
 BOOL WINAPI CloseHandle(HANDLE hObject) {
     FILE_LOGD("CloseHandle(hObject: %p)", hObject);
     if(!hObject)
-    	return FALSE;
+        return FALSE;
     //https://msdn.microsoft.com/en-us/9b84891d-62ca-4ddc-97b7-c4c79482abd9
     // Can be a thread/event/file handle!
     switch(hObject->handleType) {
@@ -823,29 +823,29 @@ BOOL WINAPI CloseHandle(HANDLE hObject) {
             hObject->threadParameter = NULL;
             free(hObject);
             return TRUE;
-	    case HANDLE_TYPE_COM: {
-		    SERIAL_LOGD("CloseHandle(hObject: %p) for HANDLE_TYPE_COM", hObject);
+            case HANDLE_TYPE_COM: {
+                    SERIAL_LOGD("CloseHandle(hObject: %p) for HANDLE_TYPE_COM", hObject);
 
-		    closeSerialPort(hObject->commId);
-		    hObject->commId = 0;
+                    closeSerialPort(hObject->commId);
+                    hObject->commId = 0;
 
-		    hObject->handleType = HANDLE_TYPE_INVALID;
-		    if(hObject->commState) {
-			    free(hObject->commState);
-			    hObject->commState = NULL;
-		    }
-		    if(hObject->commEvent) {
-			    CloseHandle(hObject->commEvent);
-			    hObject->commEvent = NULL;
-		    }
-		    if(hObject->commIndex != -1) {
-			    pthread_mutex_lock(&commsLock);
-			    comms[hObject->commIndex] = NULL;
-			    pthread_mutex_unlock(&commsLock);
-		    }
-		    free(hObject);
-		    return TRUE;
-	    }
+                    hObject->handleType = HANDLE_TYPE_INVALID;
+                    if(hObject->commState) {
+                            free(hObject->commState);
+                            hObject->commState = NULL;
+                    }
+                    if(hObject->commEvent) {
+                            CloseHandle(hObject->commEvent);
+                            hObject->commEvent = NULL;
+                    }
+                    if(hObject->commIndex != -1) {
+                            pthread_mutex_lock(&commsLock);
+                            comms[hObject->commIndex] = NULL;
+                            pthread_mutex_unlock(&commsLock);
+                    }
+                    free(hObject);
+                    return TRUE;
+            }
         default:
             break;
     }
@@ -853,18 +853,18 @@ BOOL WINAPI CloseHandle(HANDLE hObject) {
 }
 
 void Sleep(int ms) {
-	if(ms == 0) {
-		// Because sched_yield() does not seem to work with Android, try to increase the pause duration,
-		// hoping to switch to the others thread (WorkerThread).
-		ms = 1;
-	}
-	sched_yield();
-	time_t seconds = ms / 1000;
-	long milliseconds = ms - 1000 * seconds;
-	struct timespec timeOut, remains;
-	timeOut.tv_sec = seconds;
-	timeOut.tv_nsec = milliseconds * 1000000;
-	nanosleep(&timeOut, &remains);
+        if(ms == 0) {
+                // Because sched_yield() does not seem to work with Android, try to increase the pause duration,
+                // hoping to switch to the others thread (WorkerThread).
+                ms = 1;
+        }
+        sched_yield();
+        time_t seconds = ms / 1000;
+        long milliseconds = ms - 1000 * seconds;
+        struct timespec timeOut, remains;
+        timeOut.tv_sec = seconds;
+        timeOut.tv_nsec = milliseconds * 1000000;
+        nanosleep(&timeOut, &remains);
 }
 
 BOOL QueryPerformanceFrequency(PLARGE_INTEGER l) {
@@ -966,7 +966,7 @@ BOOL GetSaveFileName(LPOPENFILENAME openFilename) {
     return FALSE;
 }
 
-// Almost the same function as the private core function DibNumColors()
+// Almost the same function as the private emu48plus function DibNumColors()
 static __inline WORD DibNumColors(BITMAPINFOHEADER CONST *lpbi)
 {
     if (lpbi->biClrUsed != 0) return (WORD) lpbi->biClrUsed;
@@ -1009,19 +1009,19 @@ static HBITMAP DecodeBMPIcon(LPBYTE imageBuffer, size_t imageSize) {
         // Inverse the height
         BYTE *source = imageBuffer + dwFileSize - stride;
         BYTE *destination = hBitmap->bitmapBits;
-	    DWORD width = pBmi->bmiHeader.biWidth;
-	    for (unsigned int y = 0; y < height; ++y) {
-		    for (unsigned int x = 0; x < width; ++x) {
-			    BYTE * sourcePixel = source + (x << 2);
-			    BYTE * destinationPixel = destination + (x << 2);
-			    destinationPixel[0] = sourcePixel[2];
-			    destinationPixel[1] = sourcePixel[1];
-			    destinationPixel[2] = sourcePixel[0];
-			    destinationPixel[3] = sourcePixel[3];
-		    }
-		    source -= stride;
-		    destination += stride;
-	    }
+            DWORD width = pBmi->bmiHeader.biWidth;
+            for (unsigned int y = 0; y < height; ++y) {
+                    for (unsigned int x = 0; x < width; ++x) {
+                            BYTE * sourcePixel = source + (x << 2);
+                            BYTE * destinationPixel = destination + (x << 2);
+                            destinationPixel[0] = sourcePixel[2];
+                            destinationPixel[1] = sourcePixel[1];
+                            destinationPixel[2] = sourcePixel[0];
+                            destinationPixel[3] = sourcePixel[3];
+                    }
+                    source -= stride;
+                    destination += stride;
+            }
     }
     // Only support 32bits RGBA BMP for now.
     return hBitmap;
@@ -1050,7 +1050,7 @@ static HBITMAP DecodePNGIcon(LPBYTE imageBuffer, size_t imageSize) {
         LPBYTE  pbyPixels;						// BMP buffer
         hBitmap = CreateDIBSection(hWindowDC, &bmi, DIB_RGB_COLORS, (VOID **)&pbyPixels, NULL, 0);
         if (hBitmap)
-	        memcpy(pbyPixels, pbyImage, bmi.bmiHeader.biSizeImage);
+                memcpy(pbyPixels, pbyImage, bmi.bmiHeader.biSizeImage);
     }
 
     if (pbyImage != NULL)
@@ -1770,14 +1770,14 @@ HGDIOBJ SelectObject(HDC hdc, HGDIOBJ h) {
             case HGDIOBJ_TYPE_BITMAP: {
                 HBITMAP oldSelectedBitmap = hdc->selectedBitmap;
                 hdc->selectedBitmap = h;
-	            return oldSelectedBitmap;
+                    return oldSelectedBitmap;
             }
             case HGDIOBJ_TYPE_REGION:
                 break;
             case HGDIOBJ_TYPE_PALETTE: {
                 HPALETTE oldSelectedPalette = hdc->selectedPalette;
                 hdc->selectedPalette = h;
-	            return oldSelectedPalette;
+                    return oldSelectedPalette;
             }
             default:
                 break;
@@ -1838,7 +1838,7 @@ BOOL DeleteObject(HGDIOBJ ho) {
             case HGDIOBJ_TYPE_BITMAP: {
                 PAINT_LOGD("PAINT DeleteObject() HGDIOBJ_TYPE_BITMAP");
                 if(ho == rootBITMAP)
-                	return FALSE;
+                        return FALSE;
                 ho->handleType = HGDIOBJ_TYPE_INVALID;
                 if(ho->bitmapInfo)
                     free((void *) ho->bitmapInfo);
@@ -1850,13 +1850,13 @@ BOOL DeleteObject(HGDIOBJ ho) {
                 free(ho);
                 return TRUE;
             }
-	        case HGDIOBJ_TYPE_BRUSH: {
-		        PAINT_LOGD("PAINT DeleteObject() HGDIOBJ_TYPE_BRUSH");
-		        ho->handleType = HGDIOBJ_TYPE_INVALID;
-		        ho->brushColor = 0;
-		        free(ho);
-		        return TRUE;
-	        }
+                case HGDIOBJ_TYPE_BRUSH: {
+                        PAINT_LOGD("PAINT DeleteObject() HGDIOBJ_TYPE_BRUSH");
+                        ho->handleType = HGDIOBJ_TYPE_INVALID;
+                        ho->brushColor = 0;
+                        free(ho);
+                        return TRUE;
+                }
             default:
                 break;
         }
@@ -1879,8 +1879,8 @@ HPALETTE CreatePalette(CONST LOGPALETTE * plpal) {
     return handle;
 }
 HPALETTE SelectPalette(HDC hdc, HPALETTE hPal, BOOL bForceBkgd) {
-	if(!hdc)
-		return NULL;
+        if(!hdc)
+                return NULL;
     HPALETTE hOldPal = hdc->selectedPalette;
     hdc->selectedPalette = hPal;
     return hOldPal;
@@ -1912,7 +1912,7 @@ HDC CreateCompatibleDC(HDC hdc) {
     memset(handle, 0, sizeof(struct _HDC));
     handle->handleType = HDC_TYPE_DC;
     handle->hdcCompatible = hdc;
-	handle->selectedBitmap = rootBITMAP;
+        handle->selectedBitmap = rootBITMAP;
     return handle;
 }
 HDC GetDC(HWND hWnd) {
@@ -1980,12 +1980,12 @@ BOOL PatBlt(HDC hdcDest, int x, int y, int w, int h, DWORD rop) {
 
             destinationStride = androidBitmapInfo.stride;
 
-//	        RECT newRectangleToUpdate;
-//	        newRectangleToUpdate.left = x;
-//	        newRectangleToUpdate.top = y;
-//	        newRectangleToUpdate.right = x + w;
-//	        newRectangleToUpdate.bottom = y + h;
-//	        UnionRect(&mainViewRectangleToUpdate, &mainViewRectangleToUpdate, &newRectangleToUpdate);
+//              RECT newRectangleToUpdate;
+//              newRectangleToUpdate.left = x;
+//              newRectangleToUpdate.top = y;
+//              newRectangleToUpdate.right = x + w;
+//              newRectangleToUpdate.bottom = y + h;
+//              UnionRect(&mainViewRectangleToUpdate, &mainViewRectangleToUpdate, &newRectangleToUpdate);
 
             if ((ret = AndroidBitmap_lockPixels(jniEnv, bitmapMainScreen, &pixelsDestination)) < 0) {
                 LOGD("AndroidBitmap_lockPixels() failed ! error=%d", ret);
@@ -1997,15 +1997,15 @@ BOOL PatBlt(HDC hdcDest, int x, int y, int w, int h, DWORD rop) {
 
             destinationWidth = hBitmapDestination->bitmapInfoHeader->biWidth;
             destinationHeight = abs(hBitmapDestination->bitmapInfoHeader->biHeight);
-	        //TODO destinationTopDown = hBitmapDestination->bitmapInfoHeader->biHeight < 0;
+                //TODO destinationTopDown = hBitmapDestination->bitmapInfoHeader->biHeight < 0;
 
             destinationStride = (float)(4 * ((destinationWidth * hBitmapDestination->bitmapInfoHeader->biBitCount + 31) / 32));
         }
 
-	    x -= hdcDest->windowOriginX;
-	    y -= hdcDest->windowOriginY;
+            x -= hdcDest->windowOriginX;
+            y -= hdcDest->windowOriginY;
 
-	    HPALETTE palette = hdcDest->realizedPalette;
+            HPALETTE palette = hdcDest->realizedPalette;
         if(!palette)
             palette = hdcDest->selectedPalette;
         PALETTEENTRY * palPalEntry = palette && palette->paletteLog && palette->paletteLog->palPalEntry ?
@@ -2086,8 +2086,8 @@ BOOL StretchBlt(HDC hdcDest, int xDest, int yDest, int wDest, int hDest, HDC hdc
         void * pixelsDestination = NULL;
         int destinationBitCount = 8;
 
-	    BOOL sourceTopDown = hBitmapSource->bitmapInfoHeader->biHeight < 0;
-	    BOOL destinationTopDown = FALSE;
+            BOOL sourceTopDown = hBitmapSource->bitmapInfoHeader->biHeight < 0;
+            BOOL destinationTopDown = FALSE;
 
         int sourceWidth = hBitmapSource->bitmapInfoHeader->biWidth;
         int sourceHeight = abs(hBitmapSource->bitmapInfoHeader->biHeight); // Can be < 0
@@ -2119,16 +2119,16 @@ BOOL StretchBlt(HDC hdcDest, int xDest, int yDest, int wDest, int hDest, HDC hdc
             destinationBitCount = 32;
             destinationStride = androidBitmapInfo.stride;
 
-	        destinationTopDown = TRUE;
+                destinationTopDown = TRUE;
 
-//	        RECT newRectangleToUpdate;
-//	        newRectangleToUpdate.left = xDest;
-//	        newRectangleToUpdate.top = yDest;
-//	        newRectangleToUpdate.right = xDest + wDest;
-//	        newRectangleToUpdate.bottom = yDest + hDest;
-//	        UnionRect(&mainViewRectangleToUpdate, &mainViewRectangleToUpdate, &newRectangleToUpdate);
+//              RECT newRectangleToUpdate;
+//              newRectangleToUpdate.left = xDest;
+//              newRectangleToUpdate.top = yDest;
+//              newRectangleToUpdate.right = xDest + wDest;
+//              newRectangleToUpdate.bottom = yDest + hDest;
+//              UnionRect(&mainViewRectangleToUpdate, &mainViewRectangleToUpdate, &newRectangleToUpdate);
 
-	        if ((ret = AndroidBitmap_lockPixels(jniEnv, bitmapMainScreen, &pixelsDestination)) < 0) {
+                if ((ret = AndroidBitmap_lockPixels(jniEnv, bitmapMainScreen, &pixelsDestination)) < 0) {
                 LOGD("AndroidBitmap_lockPixels() failed ! error=%d", ret);
                 return FALSE;
             }
@@ -2209,16 +2209,16 @@ void StretchBltInternal(int xDest, int yDest, int wDest, int hDest,
 
     int src_cury, dst_cury;
     for (int y = yDest; y < dst_maxy; y++) {
-		if(sourceTopDown)
-			src_cury = ySrc + (y - yDest) * hSrc / hDest; // Source top-down
-		else
-			src_cury = sourceHeight - 1 - (ySrc + (y - yDest) * hSrc / hDest); // Source bottom-up
+                if(sourceTopDown)
+                        src_cury = ySrc + (y - yDest) * hSrc / hDest; // Source top-down
+                else
+                        src_cury = sourceHeight - 1 - (ySrc + (y - yDest) * hSrc / hDest); // Source bottom-up
         if (src_cury < 0 || src_cury >= sourceHeight)
             continue;
         if(destinationTopDown)
-	        dst_cury = y; // Destination top-down
-	    else
-	        dst_cury = destinationHeight - 1 - y; // Destination bottom-up
+                dst_cury = y; // Destination top-down
+            else
+                dst_cury = destinationHeight - 1 - y; // Destination bottom-up
 
         BYTE parity = (BYTE) xSrc;
         for (int x = xDest; x < dst_maxx; x++, parity++) {
@@ -2314,7 +2314,7 @@ void StretchBltInternal(int xDest, int yDest, int wDest, int hDest,
                     // In other words, GDI considers a monochrome bitmap to be
                     // black pixels on a white background.
                     BYTE * destinationPixel = destinationPixelBase + (x >> 3);
-	                UINT bitNumber = (UINT) (7 - (x % 8));
+                        UINT bitNumber = (UINT) (7 - (x % 8));
                     if(backgroundColor == sourceColor) {
                         *destinationPixel |= (1 << bitNumber); // 1 White
                     } else {
@@ -2387,7 +2387,7 @@ HBITMAP CreateBitmap( int nWidth, int nHeight, UINT nPlanes, UINT nBitCount, CON
     newBitmapInfo->bmiHeader.biBitCount = (WORD) nBitCount;
     newBitmapInfo->bmiHeader.biClrUsed = 0;
     newBitmapInfo->bmiHeader.biWidth = nWidth;
-	newBitmapInfo->bmiHeader.biHeight = nHeight;
+        newBitmapInfo->bmiHeader.biHeight = nHeight;
     newBitmapInfo->bmiHeader.biPlanes = (WORD) nPlanes;
     newHBITMAP->bitmapInfo = newBitmapInfo;
     newHBITMAP->bitmapInfoHeader = (BITMAPINFOHEADER *)newBitmapInfo;
@@ -2406,228 +2406,228 @@ HBITMAP CreateBitmap( int nWidth, int nHeight, UINT nPlanes, UINT nBitCount, CON
 
 typedef struct _BmpFile
 {
-	DWORD  dwPos;							// actual reading pos
-	DWORD  dwFileSize;						// file size
-	LPBYTE pbyFile;							// buffer
+        DWORD  dwPos;							// actual reading pos
+        DWORD  dwFileSize;						// file size
+        LPBYTE pbyFile;							// buffer
 } BMPFILE, FAR *LPBMPFILE, *PBMPFILE;
 
 static BOOL ReadRleBmpByte(LPBMPFILE pBmp, BYTE *n)
 {
-	// outside BMP file
-	if (pBmp->dwPos >= pBmp->dwFileSize)
-		return TRUE;
+        // outside BMP file
+        if (pBmp->dwPos >= pBmp->dwFileSize)
+                return TRUE;
 
-	*n = pBmp->pbyFile[pBmp->dwPos++];
-	return FALSE;
+        *n = pBmp->pbyFile[pBmp->dwPos++];
+        return FALSE;
 }
 
 static BOOL DecodeRleBmp(LPBYTE ppvBits,BITMAPINFOHEADER CONST *lpbi, LPBMPFILE pBmp)
 {
-	BYTE  byLength,byColorIndex;
-	DWORD dwPos,dwRow,dwSizeImage,dwPixelPerLine;
-	BOOL  bDecoding;
+        BYTE  byLength,byColorIndex;
+        DWORD dwPos,dwRow,dwSizeImage,dwPixelPerLine;
+        BOOL  bDecoding;
 
-	_ASSERT(ppvBits != NULL);				// destination
-	_ASSERT(lpbi != NULL);					// BITMAPINFOHEADER
-	_ASSERT(pBmp != NULL);					// bitmap data
+        _ASSERT(ppvBits != NULL);				// destination
+        _ASSERT(lpbi != NULL);					// BITMAPINFOHEADER
+        _ASSERT(pBmp != NULL);					// bitmap data
 
-	// valid bit count for RLE bitmaps
-	_ASSERT(lpbi->biBitCount == 4 || lpbi->biBitCount == 8);
+        // valid bit count for RLE bitmaps
+        _ASSERT(lpbi->biBitCount == 4 || lpbi->biBitCount == 8);
 
-	// wrong bit count for compressed bitmap or top-down bitmap
-	if ((lpbi->biBitCount != 4 && lpbi->biBitCount != 8) || lpbi->biHeight < 0)
-		return TRUE;
+        // wrong bit count for compressed bitmap or top-down bitmap
+        if ((lpbi->biBitCount != 4 && lpbi->biBitCount != 8) || lpbi->biHeight < 0)
+                return TRUE;
 
-	bDecoding = TRUE;						// RLE decoder running
-	dwPos = dwRow = 0;						// reset absolute position and row counter
+        bDecoding = TRUE;						// RLE decoder running
+        dwPos = dwRow = 0;						// reset absolute position and row counter
 
-	// image size
-	_ASSERT(lpbi->biHeight >= 0);
-	dwSizeImage = WIDTHBYTES((DWORD)lpbi->biWidth * lpbi->biBitCount) * lpbi->biHeight;
+        // image size
+        _ASSERT(lpbi->biHeight >= 0);
+        dwSizeImage = WIDTHBYTES((DWORD)lpbi->biWidth * lpbi->biBitCount) * lpbi->biHeight;
 
-	ZeroMemory(ppvBits,dwSizeImage);		// clear bitmap
+        ZeroMemory(ppvBits,dwSizeImage);		// clear bitmap
 
-	// image size in pixel
-	dwSizeImage *= (8 / lpbi->biBitCount);
+        // image size in pixel
+        dwSizeImage *= (8 / lpbi->biBitCount);
 
-	// no. of pixels per line
-	dwPixelPerLine = dwSizeImage / lpbi->biHeight;
+        // no. of pixels per line
+        dwPixelPerLine = dwSizeImage / lpbi->biHeight;
 
-	do
-	{
-		// length information is WORD aligned
-		_ASSERT(((DWORD) &pBmp->pbyFile[pBmp->dwPos] % sizeof(WORD)) == 0);
-		if (ReadRleBmpByte(pBmp,&byLength))     return TRUE;
-		if (ReadRleBmpByte(pBmp,&byColorIndex)) return TRUE;
+        do
+        {
+                // length information is WORD aligned
+                _ASSERT(((DWORD) &pBmp->pbyFile[pBmp->dwPos] % sizeof(WORD)) == 0);
+                if (ReadRleBmpByte(pBmp,&byLength))     return TRUE;
+                if (ReadRleBmpByte(pBmp,&byColorIndex)) return TRUE;
 
-		if (byLength)						// length information
-		{
-			// check for buffer overflow
-			if (dwPos + byLength > dwSizeImage)
-			{
-				// write rest of data until buffer full
-				byLength = (dwPos > dwSizeImage) ? 0 : (BYTE) (dwSizeImage - dwPos);
-				bDecoding = FALSE;			// abort
-			}
+                if (byLength)						// length information
+                {
+                        // check for buffer overflow
+                        if (dwPos + byLength > dwSizeImage)
+                        {
+                                // write rest of data until buffer full
+                                byLength = (dwPos > dwSizeImage) ? 0 : (BYTE) (dwSizeImage - dwPos);
+                                bDecoding = FALSE;			// abort
+                        }
 
-			if (lpbi->biBitCount == 4)		// RLE4
-			{
-				BYTE byColor[2];
-				UINT s,d;
+                        if (lpbi->biBitCount == 4)		// RLE4
+                        {
+                                BYTE byColor[2];
+                                UINT s,d;
 
-				// split into upper/lower nibble
-				byColor[0] = byColorIndex >> 4;
-				byColor[1] = byColorIndex & 0x0F;
+                                // split into upper/lower nibble
+                                byColor[0] = byColorIndex >> 4;
+                                byColor[1] = byColorIndex & 0x0F;
 
-				s = 0;						// source nibble selector [0/1]
-				d = (~dwPos & 1) * 4;		// destination shift [0/4]
+                                s = 0;						// source nibble selector [0/1]
+                                d = (~dwPos & 1) * 4;		// destination shift [0/4]
 
-				while (byLength-- > 0)
-				{
-					// write nibble to memory
-					_ASSERT((byColor[s] & 0xF0) == 0);
-					ppvBits[dwPos++/2] |= (byColor[s] << d);
-					s ^= 1;					// next source nibble
-					d ^= 4;					// next destination shift
-				}
-			}
-			else							// RLE8
-			{
-				while (byLength-- > 0)
-					ppvBits[dwPos++] = byColorIndex;
-			}
-		}
-		else								// escape sequence
-		{
-			switch (byColorIndex)
-			{
-				case 0: // End of Line
-					dwPos = ++dwRow * dwPixelPerLine;
-					break;
-				case 1: // End of Bitmap
-					bDecoding = FALSE;
-					break;
-				case 2: // Delta
-					// column offset
-					if (ReadRleBmpByte(pBmp,&byColorIndex)) return TRUE;
-					dwPos += byColorIndex;
-					// row offset
-					if (ReadRleBmpByte(pBmp,&byColorIndex)) return TRUE;
-					dwRow += byColorIndex;
-					dwPos += dwPixelPerLine * byColorIndex;
-					break;
-				default: // absolute mode
-					// check for buffer overflow
-					if (dwPos + byColorIndex > dwSizeImage)
-					{
-						// write rest of data until buffer full
-						byColorIndex = (dwPos > dwSizeImage) ? 0 : (BYTE) (dwSizeImage - dwPos);
-						bDecoding = FALSE;		// abort
-					}
+                                while (byLength-- > 0)
+                                {
+                                        // write nibble to memory
+                                        _ASSERT((byColor[s] & 0xF0) == 0);
+                                        ppvBits[dwPos++/2] |= (byColor[s] << d);
+                                        s ^= 1;					// next source nibble
+                                        d ^= 4;					// next destination shift
+                                }
+                        }
+                        else							// RLE8
+                        {
+                                while (byLength-- > 0)
+                                        ppvBits[dwPos++] = byColorIndex;
+                        }
+                }
+                else								// escape sequence
+                {
+                        switch (byColorIndex)
+                        {
+                                case 0: // End of Line
+                                        dwPos = ++dwRow * dwPixelPerLine;
+                                        break;
+                                case 1: // End of Bitmap
+                                        bDecoding = FALSE;
+                                        break;
+                                case 2: // Delta
+                                        // column offset
+                                        if (ReadRleBmpByte(pBmp,&byColorIndex)) return TRUE;
+                                        dwPos += byColorIndex;
+                                        // row offset
+                                        if (ReadRleBmpByte(pBmp,&byColorIndex)) return TRUE;
+                                        dwRow += byColorIndex;
+                                        dwPos += dwPixelPerLine * byColorIndex;
+                                        break;
+                                default: // absolute mode
+                                        // check for buffer overflow
+                                        if (dwPos + byColorIndex > dwSizeImage)
+                                        {
+                                                // write rest of data until buffer full
+                                                byColorIndex = (dwPos > dwSizeImage) ? 0 : (BYTE) (dwSizeImage - dwPos);
+                                                bDecoding = FALSE;		// abort
+                                        }
 
-					if (lpbi->biBitCount == 4)	// RLE4
-					{
-						BYTE byColor,byColorPair;
-						UINT s,d;
+                                        if (lpbi->biBitCount == 4)	// RLE4
+                                        {
+                                                BYTE byColor,byColorPair;
+                                                UINT s,d;
 
-						d = (~dwPos & 1) * 4;	// destination shift [0/4]
+                                                d = (~dwPos & 1) * 4;	// destination shift [0/4]
 
-						for (s = 0; s < byColorIndex; ++s)
-						{
-							if ((s & 1) == 0)	// upper nibble
-							{
-								// fetch color pair
-								if (ReadRleBmpByte(pBmp,&byColorPair)) return TRUE;
+                                                for (s = 0; s < byColorIndex; ++s)
+                                                {
+                                                        if ((s & 1) == 0)	// upper nibble
+                                                        {
+                                                                // fetch color pair
+                                                                if (ReadRleBmpByte(pBmp,&byColorPair)) return TRUE;
 
-								// get upper nibble
-								byColor = (byColorPair >> 4);
-							}
-							else				// lower nibble
-							{
-								// get lower nibble
-								byColor = (byColorPair & 0x0F);
-							}
+                                                                // get upper nibble
+                                                                byColor = (byColorPair >> 4);
+                                                        }
+                                                        else				// lower nibble
+                                                        {
+                                                                // get lower nibble
+                                                                byColor = (byColorPair & 0x0F);
+                                                        }
 
-							// write nibble to memory
-							_ASSERT((byColor & 0xF0) == 0);
-							ppvBits[dwPos++/2] |= (byColor << d);
-							d ^= 4;				// next destination shift
-						}
+                                                        // write nibble to memory
+                                                        _ASSERT((byColor & 0xF0) == 0);
+                                                        ppvBits[dwPos++/2] |= (byColor << d);
+                                                        d ^= 4;				// next destination shift
+                                                }
 
-						// for odd byte length detection
-						byColorIndex = (++byColorIndex) >> 1;
-					}
-					else						// RLE8
-					{
-						if (pBmp->dwPos + byColorIndex > pBmp->dwFileSize) return TRUE;
-						CopyMemory(ppvBits+dwPos,&pBmp->pbyFile[pBmp->dwPos],byColorIndex);
-						dwPos += byColorIndex;
-						pBmp->dwPos += byColorIndex;
-					}
-					// word align on odd byte length
-					if (byColorIndex & 1) ++pBmp->dwPos;
-					break;
-			}
-		}
-	}
-	while (bDecoding);
-	return FALSE;
+                                                // for odd byte length detection
+                                                byColorIndex = (++byColorIndex) >> 1;
+                                        }
+                                        else						// RLE8
+                                        {
+                                                if (pBmp->dwPos + byColorIndex > pBmp->dwFileSize) return TRUE;
+                                                CopyMemory(ppvBits+dwPos,&pBmp->pbyFile[pBmp->dwPos],byColorIndex);
+                                                dwPos += byColorIndex;
+                                                pBmp->dwPos += byColorIndex;
+                                        }
+                                        // word align on odd byte length
+                                        if (byColorIndex & 1) ++pBmp->dwPos;
+                                        break;
+                        }
+                }
+        }
+        while (bDecoding);
+        return FALSE;
 }
 
 HBITMAP CreateDIBitmap( HDC hdc, CONST BITMAPINFOHEADER *pbmih, DWORD flInit, CONST VOID *pjBits, CONST BITMAPINFO *pbmi, UINT iUsage) {
     PAINT_LOGD("PAINT CreateDIBitmap()");
 
-	HGDIOBJ newHBITMAP = (HGDIOBJ)malloc(sizeof(_HGDIOBJ));
-	memset(newHBITMAP, 0, sizeof(_HGDIOBJ));
-	newHBITMAP->handleType = HGDIOBJ_TYPE_BITMAP;
+        HGDIOBJ newHBITMAP = (HGDIOBJ)malloc(sizeof(_HGDIOBJ));
+        memset(newHBITMAP, 0, sizeof(_HGDIOBJ));
+        newHBITMAP->handleType = HGDIOBJ_TYPE_BITMAP;
 
-	BITMAPINFO * newBitmapInfo = malloc(sizeof(BITMAPINFO));
-	memcpy(newBitmapInfo, pbmi, sizeof(BITMAPINFO));
-	newHBITMAP->bitmapInfo = newBitmapInfo;
-	newHBITMAP->bitmapInfoHeader = (BITMAPINFOHEADER *)newBitmapInfo;
+        BITMAPINFO * newBitmapInfo = malloc(sizeof(BITMAPINFO));
+        memcpy(newBitmapInfo, pbmi, sizeof(BITMAPINFO));
+        newHBITMAP->bitmapInfo = newBitmapInfo;
+        newHBITMAP->bitmapInfoHeader = (BITMAPINFOHEADER *)newBitmapInfo;
 
-	if(flInit == CBM_INIT && pjBits) {
-		VOID * bitmapBits = NULL;
-		if(iUsage == DIB_RGB_COLORS) {
-			switch (pbmi->bmiHeader.biCompression) {
-				case BI_RLE4:
-				case BI_RLE8: {
+        if(flInit == CBM_INIT && pjBits) {
+                VOID * bitmapBits = NULL;
+                if(iUsage == DIB_RGB_COLORS) {
+                        switch (pbmi->bmiHeader.biCompression) {
+                                case BI_RLE4:
+                                case BI_RLE8: {
 
-					// Destination
-					BOOL bErr;
-					newBitmapInfo->bmiHeader.biCompression = BI_RGB;
-					size_t stride = (size_t)(4 * ((newBitmapInfo->bmiHeader.biWidth * newBitmapInfo->bmiHeader.biBitCount + 31) / 32));
-					size_t size = abs(newBitmapInfo->bmiHeader.biHeight) * stride;
-					bitmapBits = malloc(size);
-					BMPFILE Bmp;
-					int bitOffset = sizeof(BITMAPINFOHEADER) + (pbmi->bmiHeader.biCompression == BI_BITFIELDS ? 3 * sizeof(DWORD) : DibNumColors(&pbmi->bmiHeader) * sizeof(RGBQUAD));
+                                        // Destination
+                                        BOOL bErr;
+                                        newBitmapInfo->bmiHeader.biCompression = BI_RGB;
+                                        size_t stride = (size_t)(4 * ((newBitmapInfo->bmiHeader.biWidth * newBitmapInfo->bmiHeader.biBitCount + 31) / 32));
+                                        size_t size = abs(newBitmapInfo->bmiHeader.biHeight) * stride;
+                                        bitmapBits = malloc(size);
+                                        BMPFILE Bmp;
+                                        int bitOffset = sizeof(BITMAPINFOHEADER) + (pbmi->bmiHeader.biCompression == BI_BITFIELDS ? 3 * sizeof(DWORD) : DibNumColors(&pbmi->bmiHeader) * sizeof(RGBQUAD));
 
-					Bmp.pbyFile = ((LPBYTE)&pbmi->bmiHeader) + bitOffset;
-					Bmp.dwPos = 0;
-					Bmp.dwFileSize = -1; //size;
+                                        Bmp.pbyFile = ((LPBYTE)&pbmi->bmiHeader) + bitOffset;
+                                        Bmp.dwPos = 0;
+                                        Bmp.dwFileSize = -1; //size;
 
-					bErr = DecodeRleBmp(
-							/* Destination */ bitmapBits,
-							/* Destination header */ &newBitmapInfo->bmiHeader,
-							/* Source */ &Bmp);
-					break;
-				}
-				case BI_RGB:
-				case BI_BITFIELDS: {
-					// We consider the source and destination dib with the same format
-					size_t stride = (size_t)(4 * ((newBitmapInfo->bmiHeader.biWidth * newBitmapInfo->bmiHeader.biBitCount + 31) / 32));
-					size_t size = newBitmapInfo->bmiHeader.biSizeImage ?
-					              newBitmapInfo->bmiHeader.biSizeImage :
-					              abs(newBitmapInfo->bmiHeader.biHeight) * stride;
-					bitmapBits = malloc(size);
-					memcpy(bitmapBits, pjBits, size);
-					break;
-				}
-			}
-		}
-		newHBITMAP->bitmapBits = bitmapBits;
-	}
-	return newHBITMAP;
+                                        bErr = DecodeRleBmp(
+                                                        /* Destination */ bitmapBits,
+                                                        /* Destination header */ &newBitmapInfo->bmiHeader,
+                                                        /* Source */ &Bmp);
+                                        break;
+                                }
+                                case BI_RGB:
+                                case BI_BITFIELDS: {
+                                        // We consider the source and destination dib with the same format
+                                        size_t stride = (size_t)(4 * ((newBitmapInfo->bmiHeader.biWidth * newBitmapInfo->bmiHeader.biBitCount + 31) / 32));
+                                        size_t size = newBitmapInfo->bmiHeader.biSizeImage ?
+                                                      newBitmapInfo->bmiHeader.biSizeImage :
+                                                      abs(newBitmapInfo->bmiHeader.biHeight) * stride;
+                                        bitmapBits = malloc(size);
+                                        memcpy(bitmapBits, pjBits, size);
+                                        break;
+                                }
+                        }
+                }
+                newHBITMAP->bitmapBits = bitmapBits;
+        }
+        return newHBITMAP;
 }
 HBITMAP CreateDIBSection(HDC hdc, CONST BITMAPINFO *pbmi, UINT usage, VOID **ppvBits, HANDLE hSection, DWORD offset) {
     PAINT_LOGD("PAINT CreateDIBSection()");
@@ -2680,7 +2680,7 @@ HBITMAP CreateCompatibleBitmap( HDC hdc, int cx, int cy) {
     return newHBITMAP;
 }
 int GetDIBits(HDC hdc, HBITMAP hbm, UINT start, UINT cLines, LPVOID lpvBits, LPBITMAPINFO lpbmi, UINT usage) {
-	PAINT_LOGD("PAINT GetDIBits()");
+        PAINT_LOGD("PAINT GetDIBits()");
     //TODO Not sure at all for this function
     if(hbm && lpbmi) {
         CONST BITMAPINFO *pbmi = hbm->bitmapInfo;
@@ -2772,12 +2772,12 @@ COLORREF GetPixel(HDC hdc, int x ,int y) {
     return resultColor;
 }
 BOOL SetRect(LPRECT lprc, int xLeft, int yTop, int xRight, int yBottom) {
-	if (!lprc) return FALSE;
-	lprc->left   = xLeft;
-	lprc->right  = xRight;
-	lprc->top    = yTop;
-	lprc->bottom = yBottom;
-	return TRUE;
+        if (!lprc) return FALSE;
+        lprc->left   = xLeft;
+        lprc->right  = xRight;
+        lprc->top    = yTop;
+        lprc->bottom = yBottom;
+        return TRUE;
 }
 BOOL SetRectEmpty(LPRECT lprc) {
     if(lprc) {
@@ -2791,35 +2791,35 @@ BOOL SetRectEmpty(LPRECT lprc) {
 }
 
 BOOL IsRectEmpty(CONST RECT *lprc) {
-	if (!lprc)
-		return TRUE;
-	return lprc->left >= lprc->right || lprc->top >= lprc->bottom;
+        if (!lprc)
+                return TRUE;
+        return lprc->left >= lprc->right || lprc->top >= lprc->bottom;
 }
 
 // This comes from Wine source code
 BOOL UnionRect(LPRECT dest, CONST RECT *src1, CONST RECT *src2) {
-	if (!dest) return FALSE;
-	if (IsRectEmpty(src1))
-	{
-		if (IsRectEmpty(src2))
-		{
-			SetRectEmpty( dest );
-			return FALSE;
-		}
-		else *dest = *src2;
-	}
-	else
-	{
-		if (IsRectEmpty(src2)) *dest = *src1;
-		else
-		{
-			dest->left   = min( src1->left, src2->left );
-			dest->right  = max( src1->right, src2->right );
-			dest->top    = min( src1->top, src2->top );
-			dest->bottom = max( src1->bottom, src2->bottom );
-		}
-	}
-	return TRUE;
+        if (!dest) return FALSE;
+        if (IsRectEmpty(src1))
+        {
+                if (IsRectEmpty(src2))
+                {
+                        SetRectEmpty( dest );
+                        return FALSE;
+                }
+                else *dest = *src2;
+        }
+        else
+        {
+                if (IsRectEmpty(src2)) *dest = *src1;
+                else
+                {
+                        dest->left   = min( src1->left, src2->left );
+                        dest->right  = max( src1->right, src2->right );
+                        dest->top    = min( src1->top, src2->top );
+                        dest->bottom = max( src1->bottom, src2->bottom );
+                }
+        }
+        return TRUE;
 }
 int SetWindowRgn(HWND hWnd, HRGN hRgn, BOOL bRedraw) {
     //TODO
@@ -2917,11 +2917,11 @@ static void initTimer() {
 }
 
 static void dumpTimers() {
-	TIMER_LOGD("dumpTimers()");
-	for (struct timerEvent * nextTimer = timersList.next; nextTimer != &timersList; nextTimer = nextTimer->next) {
-		TIMER_LOGD("\ttimerId: %d (%x), uDelay: %d, dwUser: %d, fuEvent: %d, triggerTime: %ld)",
-		           nextTimer->timerId, nextTimer, nextTimer->uDelay, nextTimer->dwUser, nextTimer->fuEvent, nextTimer->triggerTime);
-	}
+        TIMER_LOGD("dumpTimers()");
+        for (struct timerEvent * nextTimer = timersList.next; nextTimer != &timersList; nextTimer = nextTimer->next) {
+                TIMER_LOGD("\ttimerId: %d (%x), uDelay: %d, dwUser: %d, fuEvent: %d, triggerTime: %ld)",
+                           nextTimer->timerId, nextTimer, nextTimer->uDelay, nextTimer->dwUser, nextTimer->fuEvent, nextTimer->triggerTime);
+        }
 }
 
 MMRESULT timeKillEvent(UINT uTimerID) {
@@ -2941,13 +2941,13 @@ MMRESULT timeKillEvent(UINT uTimerID) {
         }
     }
 #if defined(TIMER_LOGD)
-	dumpTimers();
+        dumpTimers();
 #endif
     if(timersList.next == &timersList) {
         // The list is empty
         // Leave the thread?
         timerThreadToEnd = TRUE;
-	    TIMER_LOGD("timeKillEvent(uTimerID: [%d]) timerThreadToEnd = TRUE ", uTimerID);
+            TIMER_LOGD("timeKillEvent(uTimerID: [%d]) timerThreadToEnd = TRUE ", uTimerID);
     }
     pthread_mutex_unlock(&timerEventsLock);
 
@@ -2971,13 +2971,13 @@ static void insertTimer(struct timerEvent * newTimer) {
     nextTimer->prev = newTimer;
 
 #if defined(TIMER_LOGD)
-	dumpTimers();
+        dumpTimers();
 #endif
 }
 
 static void timerThreadStart(LPVOID lpThreadParameter) {
-	TIMER_LOGD("timerThreadStart() START");
-	pthread_mutex_lock(&timerEventsLock);
+        TIMER_LOGD("timerThreadStart() START");
+        pthread_mutex_lock(&timerEventsLock);
     while (!timerThreadToEnd) {
         TIMER_LOGD("timerThreadStart() %ld", GetTickCount64());
 
@@ -3037,7 +3037,7 @@ static void timerThreadStart(LPVOID lpThreadParameter) {
     timerThreadId = 0;
     pthread_mutex_unlock(&timerEventsLock);
     jniDetachCurrentThread();
-	TIMER_LOGD("timerThreadStart() END");
+        TIMER_LOGD("timerThreadStart() END");
 }
 
 MMRESULT timeSetEvent(UINT uDelay, UINT uResolution, LPTIMECALLBACK fptc, DWORD_PTR dwUser, UINT fuEvent) {
@@ -3062,7 +3062,7 @@ MMRESULT timeSetEvent(UINT uDelay, UINT uResolution, LPTIMECALLBACK fptc, DWORD_
 
     if(!timerThreadId) {
         // If not yet created, create the thread which will handle all the timers
-	    TIMER_LOGD("timeSetEvent() pthread_create");
+            TIMER_LOGD("timeSetEvent() pthread_create");
         if (pthread_create(&timerThreadId, NULL, (void *(*)(void *)) timerThreadStart, NULL) != 0) {
             TIMER_LOGD("timeSetEvent() ERROR in pthread_create, errno: %d (EAGAIN 11 / EINVAL 22 / EPERM 1)", errno);
             //        EAGAIN Insufficient resources to create another thread.
@@ -3202,10 +3202,10 @@ INT_PTR DialogBoxParam(HINSTANCE hInstance, LPCTSTR lpTemplateName, HWND hWndPar
         } else if(chooseCurrentKmlMode == ChooseKmlMode_FILE_NEW) {
             lstrcpy(szCurrentKml, szChosenCurrentKml);
         } else if(chooseCurrentKmlMode == ChooseKmlMode_FILE_OPEN || chooseCurrentKmlMode == ChooseKmlMode_FILE_OPEN_WITH_FOLDER) {
-        	// We are here because we open a state file and the embedded KML path is not reachable.
-        	// So, we try to find a correct KML file in the current Custom KML scripts folder.
+                // We are here because we open a state file and the embedded KML path is not reachable.
+                // So, we try to find a correct KML file in the current Custom KML scripts folder.
             if(!getFirstKMLFilenameForType(Chipset.type)) {
-	            kmlFileNotFound = TRUE;
+                    kmlFileNotFound = TRUE;
                 return -1;
             }
         }
@@ -3248,7 +3248,7 @@ BOOL GetKeyboardLayoutName(LPSTR pwszKLID) {
     //TODO
     //Trick to bypass UnmapROM in KillKML
     if(pbyRom == NULL && pbyRomBackup)
-		pbyRom = pbyRomBackup;
+                pbyRom = pbyRomBackup;
     return 0;
 }
 
@@ -3365,95 +3365,95 @@ BOOL GetOverlappedResult(HANDLE hFile, LPOVERLAPPED lpOverlapped, LPDWORD lpNumb
 
 // This is not a win32 API
 void commEvent(int commId, int eventMask) {
-	SERIAL_LOGD("commEvent(commId: %d, eventMask: 0x%08x)", commId, eventMask);
+        SERIAL_LOGD("commEvent(commId: %d, eventMask: 0x%08x)", commId, eventMask);
 
-	HANDLE commHandleFound = NULL;
-	pthread_mutex_lock(&commsLock);
-	for(int i = 0; i < MAX_CREATED_COMM; i++) {
-		HANDLE commHandle = comms[i];
-		if (commHandle && commHandle->commId == commId) {
-			commHandleFound = commHandle;
-			break;
-		}
-	}
-	pthread_mutex_unlock(&commsLock);
-	if(commHandleFound) {
-		commHandleFound->commEventMask = eventMask;
-		SetEvent(commHandleFound->commEvent);
-	}
+        HANDLE commHandleFound = NULL;
+        pthread_mutex_lock(&commsLock);
+        for(int i = 0; i < MAX_CREATED_COMM; i++) {
+                HANDLE commHandle = comms[i];
+                if (commHandle && commHandle->commId == commId) {
+                        commHandleFound = commHandle;
+                        break;
+                }
+        }
+        pthread_mutex_unlock(&commsLock);
+        if(commHandleFound) {
+                commHandleFound->commEventMask = eventMask;
+                SetEvent(commHandleFound->commEvent);
+        }
 }
 
 BOOL WaitCommEvent(HANDLE hFile, LPDWORD lpEvtMask, LPOVERLAPPED lpOverlapped) {
-	SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p)", hFile, lpEvtMask);
-	if(hFile && hFile->handleType == HANDLE_TYPE_COM) {
-		SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p) -> WaitForSingleObject locking", hFile, lpEvtMask);
-		WaitForSingleObject(hFile->commEvent, INFINITE);
-		SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p) -> WaitForSingleObject unlocked", hFile, lpEvtMask);
-		pthread_mutex_lock(&commsLock);
-		if(lpEvtMask && hFile->commEventMask) {
-			*lpEvtMask = hFile->commEventMask; //EV_RXCHAR | EV_TXEMPTY | EV_ERR
-			hFile->commEventMask = 0;
-		}
-		pthread_mutex_unlock(&commsLock);
-		SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p) -> *lpEvtMask=%d", hFile, lpEvtMask, *lpEvtMask);
-		return TRUE;
-	}
+        SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p)", hFile, lpEvtMask);
+        if(hFile && hFile->handleType == HANDLE_TYPE_COM) {
+                SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p) -> WaitForSingleObject locking", hFile, lpEvtMask);
+                WaitForSingleObject(hFile->commEvent, INFINITE);
+                SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p) -> WaitForSingleObject unlocked", hFile, lpEvtMask);
+                pthread_mutex_lock(&commsLock);
+                if(lpEvtMask && hFile->commEventMask) {
+                        *lpEvtMask = hFile->commEventMask; //EV_RXCHAR | EV_TXEMPTY | EV_ERR
+                        hFile->commEventMask = 0;
+                }
+                pthread_mutex_unlock(&commsLock);
+                SERIAL_LOGD("WaitCommEvent(hFile: %p, lpEvtMask: %p) -> *lpEvtMask=%d", hFile, lpEvtMask, *lpEvtMask);
+                return TRUE;
+        }
     return FALSE;
 }
 BOOL ClearCommError(HANDLE hFile, LPDWORD lpErrors, LPCOMSTAT lpStat) {
-	SERIAL_LOGD("ClearCommError(hFile: %p, lpErrors: %p, lpStat: %p) TODO", hFile, lpErrors, lpStat);
+        SERIAL_LOGD("ClearCommError(hFile: %p, lpErrors: %p, lpStat: %p) TODO", hFile, lpErrors, lpStat);
     //TODO
     return FALSE;
 }
 BOOL SetCommTimeouts(HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts) {
-	SERIAL_LOGD("SetCommTimeouts(hFile: %p, lpCommTimeouts: %p) TODO", hFile, lpCommTimeouts);
+        SERIAL_LOGD("SetCommTimeouts(hFile: %p, lpCommTimeouts: %p) TODO", hFile, lpCommTimeouts);
     //TODO
     return FALSE;
 }
 BOOL SetCommMask(HANDLE hFile, DWORD dwEvtMask) {
-	SERIAL_LOGD("SetCommMask(hFile: %p, dwEvtMask: 0x%08X) TODO", hFile, dwEvtMask);
+        SERIAL_LOGD("SetCommMask(hFile: %p, dwEvtMask: 0x%08X) TODO", hFile, dwEvtMask);
     //TODO
-	if(hFile && hFile->handleType == HANDLE_TYPE_COM) {
-		if(dwEvtMask == 0) {
-			// When 0, clear all events and force WaitCommEvent to return.
-			SERIAL_LOGD("SetCommMask(hFile: %p, dwEvtMask: 0x%08X) SetEvent(hEvent: %p)", hFile, dwEvtMask, hFile->commEvent);
-			SetEvent(hFile->commEvent);
-			return TRUE;
-		}
-	}
+        if(hFile && hFile->handleType == HANDLE_TYPE_COM) {
+                if(dwEvtMask == 0) {
+                        // When 0, clear all events and force WaitCommEvent to return.
+                        SERIAL_LOGD("SetCommMask(hFile: %p, dwEvtMask: 0x%08X) SetEvent(hEvent: %p)", hFile, dwEvtMask, hFile->commEvent);
+                        SetEvent(hFile->commEvent);
+                        return TRUE;
+                }
+        }
     return FALSE;
 }
 BOOL SetCommState(HANDLE hFile, LPDCB lpDCB) {
-	SERIAL_LOGD("SetCommState(hFile: %p, lpDCB: %p)", hFile, lpDCB);
+        SERIAL_LOGD("SetCommState(hFile: %p, lpDCB: %p)", hFile, lpDCB);
     if(hFile && hFile->handleType == HANDLE_TYPE_COM && lpDCB) {
-	    int result = setSerialPortParameters(hFile->commId, lpDCB->BaudRate); //TODO 2 stop bits?
-	    if(result > 0) {
-		    if (hFile->commState)
-			    free(hFile->commState);
-		    hFile->commState = malloc(sizeof(struct _DCB));
-		    memcpy(hFile->commState, lpDCB, sizeof(struct _DCB));
-	    }
-	    return TRUE;
+            int result = setSerialPortParameters(hFile->commId, lpDCB->BaudRate); //TODO 2 stop bits?
+            if(result > 0) {
+                    if (hFile->commState)
+                            free(hFile->commState);
+                    hFile->commState = malloc(sizeof(struct _DCB));
+                    memcpy(hFile->commState, lpDCB, sizeof(struct _DCB));
+            }
+            return TRUE;
     }
     return FALSE;
 }
 BOOL PurgeComm(HANDLE hFile, DWORD dwFlags) {
-	SERIAL_LOGD("PurgeComm(hFile: %p, dwFlags: 0x%08X) TODO", hFile, dwFlags);
-	if(hFile && hFile->handleType == HANDLE_TYPE_COM)
-		return serialPortPurgeComm(hFile->commId, dwFlags);
+        SERIAL_LOGD("PurgeComm(hFile: %p, dwFlags: 0x%08X) TODO", hFile, dwFlags);
+        if(hFile && hFile->handleType == HANDLE_TYPE_COM)
+                return serialPortPurgeComm(hFile->commId, dwFlags);
     return FALSE;
 }
 BOOL SetCommBreak(HANDLE hFile) {
-	SERIAL_LOGD("SetCommBreak(hFile: %p)", hFile);
-	if(hFile && hFile->handleType == HANDLE_TYPE_COM)
-		return serialPortSetBreak(hFile->commId);
-	return FALSE;
+        SERIAL_LOGD("SetCommBreak(hFile: %p)", hFile);
+        if(hFile && hFile->handleType == HANDLE_TYPE_COM)
+                return serialPortSetBreak(hFile->commId);
+        return FALSE;
 }
 BOOL ClearCommBreak(HANDLE hFile) {
-	SERIAL_LOGD("ClearCommBreak(hFile: %p)", hFile);
-	if(hFile && hFile->handleType == HANDLE_TYPE_COM)
-		return serialPortClearBreak(hFile->commId);
-	return FALSE;
+        SERIAL_LOGD("ClearCommBreak(hFile: %p)", hFile);
+        if(hFile && hFile->handleType == HANDLE_TYPE_COM)
+                return serialPortClearBreak(hFile->commId);
+        return FALSE;
 }
 
 
@@ -3489,7 +3489,6 @@ int win32_select(int __fd_count, fd_set* __read_fds, fd_set* __write_fds, fd_set
 }
 
 int win32_ioctlsocket(SOCKET s, long cmd, u_long FAR * argp) {
-	//TODO
-	return 0;
+        //TODO
+        return 0;
 }
-

@@ -2,7 +2,12 @@
 
 set -eu
 
-cd ./app/src/main/assets/calculators/ || exit 1
+cd ./app/src/main/assets/ || exit 1
+
+[ -d ./calculators.bkp ] && rm -fr ./calculators.bkp
+cp -a ./calculators ./calculators.bkp
+
+cd ./calculators || exit 1
 
 rm -fr ./realcalcs* ./rom.* ./gxrom* ./sxrom* ./*.ico ./*.kml ./*.png ./*.kmi ./readme-rom.49g.txt
 

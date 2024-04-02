@@ -1,4 +1,5 @@
 *.iml
+*.bkp
 .gradle
 /local.properties
 .idea
