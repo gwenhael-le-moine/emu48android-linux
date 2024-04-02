@@ -12,12 +12,12 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-#include "core/pch.h"
-#include "core/resource.h"
+#include "emu48plus/pch.h"
+#include "emu48plus/resource.h"
 #include "emu.h"
-#include "core/io.h"
-#include "core/kml.h"
-#include "core/debugger.h"
+#include "emu48plus/io.h"
+#include "emu48plus/kml.h"
+#include "emu48plus/debugger.h"
 #include "win32-layer.h"
 
 LPTSTR szTitle   = NULL;
@@ -204,8 +204,8 @@ static void MakeBitmapTransparent(HBITMAP hBmp,COLORREF color,DWORD dwTol) {
 	DWORD dwBlue  = 0x000000FF;
 
 	color = EncodeColorBits((color >> 0), dwBlue)
-	        | EncodeColorBits((color >>  8), dwGreen)
-	        | EncodeColorBits((color >>  16), dwRed);
+		| EncodeColorBits((color >>  8), dwGreen)
+		| EncodeColorBits((color >>  16), dwRed);
 
 	DWORD dwBpp = (DWORD) (destinationBitCount >> 3);
 	LPBYTE pbyColor = pbyBits + (destinationHeight - 1) * destinationStride;
@@ -292,7 +292,7 @@ static LRESULT OnLButtonDown(UINT nFlags, WORD x, WORD y)
 	if (nState == SM_RUN) {
 		MouseButtonDownAt(nFlags, x,y);
 		if(MouseIsButton(x,y)) {
-            performHapticFeedback();
+	    performHapticFeedback();
 			return 1;
 		}
 	}

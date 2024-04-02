@@ -12,7 +12,7 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-#include "core/pch.h"
+#include "emu48plus/pch.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
@@ -21,10 +21,10 @@
 #include <semaphore.h>
 #include <android/bitmap.h>
 #include <sys/socket.h>
-#include "core/resource.h"
+#include "emu48plus/resource.h"
 #include "win32-layer.h"
 #include "emu.h"
-#include "core/lodepng.h"
+#include "emu48plus/lodepng.h"
 
 
 extern JavaVM *java_machine;
@@ -966,7 +966,7 @@ BOOL GetSaveFileName(LPOPENFILENAME openFilename) {
     return FALSE;
 }
 
-// Almost the same function as the private core function DibNumColors()
+// Almost the same function as the private emu48plus function DibNumColors()
 static __inline WORD DibNumColors(BITMAPINFOHEADER CONST *lpbi)
 {
     if (lpbi->biClrUsed != 0) return (WORD) lpbi->biClrUsed;
