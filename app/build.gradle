@@ -34,12 +34,12 @@ android {
         applicationId "eu.luoi.forty.eight"
         minSdk 19
         targetSdk 33
-        versionCode 26
-        versionName "2.7"
+        versionCode 27
+        versionName "2.7.1"
         setProperty("archivesBaseName", "Emu48gwh-v$versionName")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        applicationIdSuffix 'gwh'
-        versionNameSuffix 'gwh'
+        applicationIdSuffix '.gwh'
+        versionNameSuffix '-gwh'
     }
 
     if (canSign) {
