@@ -1,4 +1,4 @@
-.PHONY: release debug clean mrproper keystore
+.PHONY: release debug clean mrproper pull-assets keystore
 
 release:
 	./gradlew assembleRelease assembleReleaseUnitTest
@@ -10,8 +10,14 @@ debug:
 
 clean:
 	./gradlew clean
+	[ -e ./app/src/main/cpp/emu48plus.bkp ] && rm -fr ./app/src/main/cpp/emu48plus.bkp
+	[ -e ./app/src/main/assets/calculators.bkp ] && rm -fr ./app/src/main/assets/calculators.bkp
 
 mrproper: clean
 
+pull-assets:
+	bash ./pull-KMLs-and-ROMs.sh
+	zsh ./pull-emu48plus-sources.sh
+
 keystore:
-	keytool -genkey -keystore ./keystore.jks -keyalg RSA -validity 9125 -alias key0
+	bash ./gen-keystore.sh
