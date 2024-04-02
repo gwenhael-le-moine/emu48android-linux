@@ -43,8 +43,8 @@ android {
                 cppFlags '-std=c++11 -fpermissive -Wno-error=incompatible-pointer-types'
             }
         }
-        applicationIdSuffix 'gwh'
-        versionNameSuffix 'gwh'
+        applicationIdSuffix '.gwh'
+        versionNameSuffix '-gwh'
     }
 
     if (canSign) {
