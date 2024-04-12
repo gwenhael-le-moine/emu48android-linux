@@ -15,6 +15,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <pthread.h>
 #include <semaphore.h>
 #include <wchar.h>
@@ -69,8 +70,8 @@
 #define __unaligned
 #define GetWindowLongPtr GetWindowLong
 
-#define TRUE 1
-#define FALSE 0
+#define TRUE true
+#define FALSE false
 #define MAX_PATH PATH_MAX
 #define INFINITE 0xFFFFFFFF // 0
 #define FAR
@@ -81,7 +82,7 @@
 #undef abs
 extern int abs( int i );
 
-typedef int BOOL;
+typedef bool BOOL;
 typedef unsigned long ULONG;
 typedef short SHORT;
 typedef unsigned short USHORT;
