@@ -12,8 +12,8 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.util.Log;
 
-import org.emulator.calculator.usbserial.util.HexDump;
-import org.emulator.calculator.usbserial.util.UsbUtils;
+import eu.luoi.calculator.usbserial.util.HexDump;
+import eu.luoi.calculator.usbserial.util.UsbUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

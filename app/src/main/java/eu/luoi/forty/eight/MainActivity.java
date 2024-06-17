@@ -1580,35 +1580,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-<<<<<<< HEAD:app/src/main/java/org/emulator/forty/eight/MainActivity.java
-        if(getPackageName().contains("org.emulator.forty.eight") && settings.getBoolean("settings_port2en", false)) {
-            // Check if the access to the port2 shared file is still possible.
-            String port2Url = settings.getString("settings_port2load", "");
-            if(port2Url != null && port2Url.length() > 0) {
-                Uri port2Uri = Uri.parse(port2Url);
-                DocumentFile port2DocumentFile = DocumentFile.fromSingleUri(this, port2Uri);
-                if (port2DocumentFile == null || !port2DocumentFile.exists()) {
-                    String port2Filename = getFilenameFromURL(port2Url);
-                    String finalKmlScriptFolder = kmlScriptFolder;
-                    new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.message_open_port2_file_not_found))
-                        .setMessage(String.format(Locale.US, getString(R.string.message_open_port2_file_not_found_description), port2Filename))
-                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-||||||| parent of 31b382e (rename java package s/org.emulator/eu.luoi/g):app/src/main/java/org/emulator/forty/eight/MainActivity.java
-        if(getPackageName().contains("org.emulator.forty.eight") && settings.getBoolean("settings_port2en", false)) {
-            // Check if the access to the port2 shared file is still possible.
-            String port2Url = settings.getString("settings_port2load", "");
-            if(port2Url != null && port2Url.length() > 0) {
-                Uri port2Uri = Uri.parse(port2Url);
-                DocumentFile port2DocumentFile = DocumentFile.fromSingleUri(this, port2Uri);
-                if (port2DocumentFile == null || !port2DocumentFile.exists()) {
-                    String port2Filename = getFilenameFromURL(port2Url);
-                    String finalKmlScriptFolder = kmlScriptFolder;
-                    new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.message_open_port2_file_not_found))
-                        .setMessage(String.format(Locale.US, getString(R.string.message_open_port2_file_not_found_description), port2Filename))
-                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-=======
         if(getPackageName().contains("eu.luoi.forty.eight") && settings.getBoolean("settings_port2en", false)) {
             // Check if the access to the port2 shared file is still possible.
             String port2Url = settings.getString("settings_port2load", "");
@@ -1622,7 +1593,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setTitle(getString(R.string.message_open_port2_file_not_found))
                         .setMessage(String.format(Locale.US, getString(R.string.message_open_port2_file_not_found_description), port2Filename))
                         .setPositiveButton(android.R.string.ok, (dialog, which) -> {
->>>>>>> 31b382e (rename java package s/org.emulator/eu.luoi/g):app/src/main/java/eu/luoi/forty/eight/MainActivity.java
 
                             urlToOpenInIntentPort2Load = url;
                             kmlScriptFolderInIntentPort2Load = finalKmlScriptFolder;
@@ -2230,25 +2200,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setPort1Settings(boolean port1Plugged, boolean port1Writable) {
-<<<<<<< HEAD:app/src/main/java/org/emulator/forty/eight/MainActivity.java
-        if(this.getClass().getPackage().getName().equals("org.emulator.forty.eight")) {
-            settings.putBoolean("settings_port1en", port1Plugged);
-            settings.putBoolean("settings_port1wr", port1Writable);
-            updateFromPreferences("settings_port1", true);
-        }
-||||||| parent of 31b382e (rename java package s/org.emulator/eu.luoi/g):app/src/main/java/org/emulator/forty/eight/MainActivity.java
-        if(this.getClass().getPackage().getName().equals("org.emulator.forty.eight")) {
-            settings.putBoolean("settings_port1en", port1Plugged);
-            settings.putBoolean("settings_port1wr", port1Writable);
-            updateFromPreferences("settings_port1", true);
-        }
-=======
         if(this.getClass().getPackage().getName().equals("eu.luoi.forty.eight")) {
             settings.putBoolean("settings_port1en", port1Plugged);
             settings.putBoolean("settings_port1wr", port1Writable);
             updateFromPreferences("settings_port1", true);
         }
->>>>>>> 31b382e (rename java package s/org.emulator/eu.luoi/g):app/src/main/java/eu/luoi/forty/eight/MainActivity.java
     }
 
     private void updateFromPreferences(String key, boolean isDynamic) {
@@ -2281,13 +2237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     mainScreenView.setRotationMode(rotationMode, isDynamic);
                     break;
                 case "settings_auto_layout":
-<<<<<<< HEAD:app/src/main/java/org/emulator/forty/eight/MainActivity.java
-                    int autoLayoutMode = getPackageName().contains("org.emulator.forty.eight") ? 1 : 2;
-||||||| parent of 31b382e (rename java package s/org.emulator/eu.luoi/g):app/src/main/java/org/emulator/forty/eight/MainActivity.java
-                    int autoLayoutMode = getPackageName().contains("org.emulator.forty.eight") ? 1 : 2;
-=======
                     int autoLayoutMode = getPackageName().contains("eu.luoi.forty.eight") ? 1 : 2;
->>>>>>> 31b382e (rename java package s/org.emulator/eu.luoi/g):app/src/main/java/eu/luoi/forty/eight/MainActivity.java
                     try {
                         autoLayoutMode = Integer.parseInt(settings.getString("settings_auto_layout", String.valueOf(autoLayoutMode)));
                     } catch (NumberFormatException ex) {

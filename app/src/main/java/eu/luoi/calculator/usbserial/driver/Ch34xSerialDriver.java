@@ -11,7 +11,7 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.util.Log;
 
-//import org.emulator.calculator.usbserial.BuildConfig;
+//import eu.luoi.calculator.usbserial.BuildConfig;
 
 import java.io.IOException;
 import java.util.Collections;

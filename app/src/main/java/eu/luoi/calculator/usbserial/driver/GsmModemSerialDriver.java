@@ -1,4 +1,4 @@
-package org.emulator.calculator.usbserial.driver;
+package eu.luoi.calculator.usbserial.driver;
 
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
