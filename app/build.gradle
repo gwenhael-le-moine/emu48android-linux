@@ -36,15 +36,15 @@ android {
         targetSdk 34
         versionCode 27
         versionName "2.8"
-        setProperty("archivesBaseName", "Emu48-v$versionName")
+        versionNameSuffix '-gwh'
+        applicationIdSuffix '.gwh'
+        setProperty("archivesBaseName", "Emu48$versionNameSuffix-v$versionName")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
                 cppFlags '-std=c++11 -fpermissive -Wno-error=incompatible-pointer-types'
             }
         }
-        applicationIdSuffix '.gwh'
-        versionNameSuffix '-gwh'
     }
 
     if (canSign) {
