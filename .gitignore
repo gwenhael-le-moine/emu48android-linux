@@ -11,3 +11,5 @@
 /keystore.jks
 /app/keystore.properties
 /keystore.properties
+/app/src/main/assets/calculators.bkp/
+/app/src/main/cpp/emu48plus.bkp/
