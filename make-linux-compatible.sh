@@ -37,7 +37,7 @@ echo "keystore.kjs" >> .gitignore
 
 echo "patch app/build.gradle to add custom suffix to build"
 SUFFIX=${SUFFIX:-gwh}
-BUILD_SUFFIXES=" versionNameSuffix \"-${SUFFIX}\"\n        applicationIdSuffix \".${SUFFIX}\"\n        versionName"
+BUILD_SUFFIXES=" versionNameSuffix \"-${SUFFIX}\"\n        versionName"
 ESCAPED_BUILD_SUFFIXES="$(echo "${BUILD_SUFFIXES}" | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/\$/\\$/g')"
 sed -i 's/ versionName/'"${ESCAPED_BUILD_SUFFIXES}"'/' app/build.gradle
-sed -i 's/Emu48-v$versionName/$applicationId$applicationIdSuffix-v$versionName$versionNameSuffix/' app/build.gradle
+sed -i 's/Emu48-v$versionName/$applicationId-v$versionName$versionNameSuffix/' app/build.gradle
