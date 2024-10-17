@@ -1,4 +1,4 @@
-.PHONY: release release-with-assets debug debug-with-assets clean mrproper pull-emu48plus pull-assets keystore linux-compatible
+.PHONY: release release-with-assets debug debug-with-assets clean mrproper pull-emu48plus pull-assets keystore linux-compatible undo-linux-compatible
 
 release:
 	./gradlew assembleRelease assembleReleaseUnitTest
@@ -22,6 +22,12 @@ mrproper: clean
 
 linux-compatible:
 	zsh ./make-linux-compatible.sh
+
+undo-linux-compatible:
+	git reset --hard HEAD
+	rm -f app/src/main/cpp/core/emu48.c
+	rm -f app/src/main/cpp/core/emu48.h
+	rm -f app/src/main/cpp/core/opcodes.h
 
 pull-emu48plus:
 	zsh ./pull-emu48plus-sources.sh
