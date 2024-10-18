@@ -29,7 +29,7 @@ sed -i 's/'$(echo "\0337")'/ss/g' ./*
 
 echo "> Correct filenames' case"
 for f in ./*; do
-    dos2unix "$f"
+    dos2unix "$f" >/dev/null 2>&1
 
     echo "$f" | grep -q "[A-Z]" && mv "$f" "$(echo "$f" | tr '[:upper:]' '[:lower:]')"
 done
