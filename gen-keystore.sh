@@ -19,3 +19,8 @@ storePassword=$password
 keyAlias=$ALIAS
 keyPassword=$password
 EOF
+
+(cd app || exit 1
+ [ -e keystore.kjs ] && mv keystore.kjs keystore.kjs.orig
+ ln -s ../keystore.kjs
+)
